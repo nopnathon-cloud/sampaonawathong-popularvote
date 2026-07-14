@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เสนอชื่อหน่วยงาน Popular Vote สำเภานาวาทอง 2569</title>
+    <title>เสนอชื่อหน่วยงานเข้ารับรางวัล Popular Vote สำเภานาวาทอง 2569</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&family=Cinzel:wght@500;700;800&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -19,235 +19,240 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Sarabun', 'Inter', 'sans-serif'],
-                    },
                     colors: {
                         navy: {
-                            50: '#f0f4f9',
-                            100: '#dde6f2',
-                            200: '#c0d0e7',
-                            700: '#1b365d', // Classic Navy Light
-                            800: '#0f2547', // Deep Navy Main
-                            900: '#07152b', // Midnight Navy Dark
+                            50: '#f4f6fa',
+                            100: '#e5eaf3',
+                            750: '#162b4d',
+                            800: '#0F1E36', // Navy Dark
+                            900: '#0A1424', // Navy Deep Dark
+                            950: '#050a12'
                         },
                         gold: {
-                            100: '#fdf8e6',
-                            200: '#f9eec1',
-                            300: '#f3df8b',
-                            400: '#ebd058',
-                            500: '#d4af37', // Metallic Gold
-                            600: '#b89426', // Warm Gold Deep
-                            700: '#8e7118', // Shadow Gold
+                            100: '#fdf8e7',
+                            200: '#fbf0c4',
+                            500: '#D4AF37', // Gold Main
+                            600: '#C5A028', // Gold Darker
+                            700: '#A3801A'
                         }
+                    },
+                    fontFamily: {
+                        sans: ['Sarabun', 'sans-serif'],
+                        serif: ['Cinzel', 'serif'],
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Smooth animations */
         .fade-in {
-            animation: fadeIn 0.4s ease-out;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* Luxurious subtle gold gradient border */
-        .gold-border-gradient {
-            border: 2px solid transparent;
-            background-image: linear-gradient(#0f2547, #0f2547), linear-gradient(to right, #d4af37, #8e7118, #fdf8e6, #b89426);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
+        .gold-gradient {
+            background: linear-gradient(135deg, #F3C65F 0%, #D4AF37 50%, #A3801A 100%);
         }
-        /* Custom scrollbar for navy theme */
+        .navy-gradient {
+            background: linear-gradient(135deg, #112240 0%, #0A1424 100%);
+        }
+        .gold-border {
+            border-image: linear-gradient(to right, #F3C65F, #A3801A) 1;
+        }
+        /* Custom dynamic scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #07152b;
+            background: #0A1424;
         }
         ::-webkit-scrollbar-thumb {
-            background: #d4af37;
+            background: #D4AF37;
             border-radius: 3px;
+        }
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 30%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(30deg);
+            transition: none;
+        }
+        .shine-effect:hover::after {
+            left: 120%;
+            transition: all 0.8s ease-in-out;
         }
     </style>
 </head>
-<body class="h-full text-slate-100 antialiased flex flex-col justify-between">
+<body class="h-full text-slate-100 antialiased flex flex-col justify-between font-sans selection:bg-gold-500 selection:text-navy-900">
 
-    <!-- Main App Container (Centered Mobile Viewport on Desktop) -->
-    <main class="w-full max-w-md mx-auto bg-navy-900 min-h-screen shadow-2xl flex flex-col justify-between relative overflow-hidden border-x border-gold-600/20">
+    <!-- Main App Container (Centered Premium Viewport on Desktop) -->
+    <main class="w-full max-w-lg mx-auto bg-navy-900 min-h-screen shadow-2xl flex flex-col justify-between relative overflow-hidden border-x border-gold-500/20">
         
-        <!-- Header Plaque Bar -->
-        <header class="bg-gradient-to-b from-navy-800 to-navy-900 border-b border-gold-500/30 px-6 py-6 rounded-b-[2rem] shadow-xl sticky top-0 z-30">
+        <!-- Header Brand App Bar -->
+        <header class="bg-gradient-to-b from-navy-800 to-navy-900 border-b border-gold-500/20 px-6 py-6 sticky top-0 z-30 shadow-lg">
             <div class="flex justify-between items-center">
-                <!-- Golden Junk Ship Icon & Title -->
-                <div class="flex items-center space-x-3.5">
-                    <div class="bg-gradient-to-br from-gold-500 to-gold-700 p-2.5 rounded-2xl shadow-lg ring-2 ring-gold-200/50">
-                        <!-- Custom Golden Ship SVG -->
-                        <svg class="w-7 h-7 text-navy-900" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M4.5 10.5C4.5 10.5 7.5 9 10.5 12C13.5 15 16.5 10.5 16.5 10.5C16.5 10.5 18 13.5 21 13.5C21 13.5 19.5 15 18 18C16.5 21 9 21 6 18C3 15 4.5 10.5 4.5 10.5Z" opacity="0.3"/>
-                            <path d="M2 17.5C5 21.5 11 21.5 15 19.5C19 17.5 21 14.5 22 13C20.5 13 19 12.25 18 11C16.5 13.5 13.5 16 10.5 13C7.5 10 5.5 11.5 4 12.5C3.5 11.5 3 10.5 3 10.5L2 11.5V17.5ZM12 2C12 2 11.5 5 13 6.5C14.5 8 16.5 6.5 16.5 6.5C16.5 6.5 14.5 4.5 13 3C11.5 1.5 12 2 12 2ZM7.5 5C7.5 5 6 7 7 8.5C8 10 9.5 9 9.5 9C9.5 9 8.5 7.5 8.5 6C8.5 4.5 7.5 5 7.5 5Z"/>
-                        </svg>
+                <div class="flex items-center space-x-3">
+                    <div class="bg-gradient-to-br from-gold-500 to-gold-700 p-2.5 rounded-xl shadow-lg shadow-gold-500/10">
+                        <i class="fa-solid fa-ship text-navy-900 text-xl"></i>
                     </div>
                     <div>
-                        <h1 class="text-base font-extrabold text-gold-300 leading-tight tracking-wide">รางวัลสำเภานาวาทอง</h1>
-                        <p class="text-[11px] text-slate-300 font-medium">Popular Vote ประจำปี 2569</p>
+                        <h1 class="text-xs font-bold tracking-widest text-gold-500 uppercase font-serif">Popular Vote 2026</h1>
+                        <p class="text-base font-extrabold text-white leading-tight">รางวัลสำเภานาวาทอง</p>
                     </div>
                 </div>
-                <!-- Admin Dashboard Toggle Button -->
-                <button onclick="toggleView('dashboard')" id="dashboardBtn" class="bg-navy-700/50 hover:bg-gold-500 hover:text-navy-900 border border-gold-500/40 active:scale-95 transition-all text-xs font-bold px-3 py-2 rounded-xl flex items-center space-x-1.5 text-gold-400">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <span>ผลคะแนน</span>
-                </button>
-                <button onclick="toggleView('form')" id="voteFormBtn" class="hidden bg-navy-700/50 hover:bg-gold-500 hover:text-navy-900 border border-gold-500/40 active:scale-95 transition-all text-xs font-bold px-3 py-2 rounded-xl flex items-center space-x-1.5 text-gold-400">
-                    <i class="fa-solid fa-file-signature"></i>
-                    <span>ทำแบบฟอร์ม</span>
-                </button>
+                
+                <!-- STICKY ACTION BUTTONS: SECURED AND HIDDEN BY DEFAULT -->
+                <div class="flex items-center space-x-2">
+                    <!-- Added 'hidden' class by default to keep voting screen private -->
+                    <button onclick="toggleView('dashboard')" id="dashboardBtn" class="hidden bg-gold-500 hover:bg-gold-600 text-navy-900 active:scale-95 transition-all text-xs font-extrabold px-3.5 py-2.5 rounded-xl flex items-center space-x-1.5 shadow-md shadow-gold-500/20">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>ดูผลโหวต</span>
+                    </button>
+                    <button onclick="toggleView('form')" id="voteFormBtn" class="hidden bg-navy-800 border border-gold-500/40 hover:bg-navy-900 text-gold-500 active:scale-95 transition-all text-xs font-extrabold px-3.5 py-2.5 rounded-xl flex items-center space-x-1.5">
+                        <i class="fa-solid fa-chevron-left"></i>
+                        <span>กลับหน้าโหวต</span>
+                    </button>
+                </div>
             </div>
         </header>
 
         <!-- Main Content Area -->
-        <div class="flex-grow px-5 py-5 overflow-y-auto">
+        <div class="flex-grow px-6 py-6 overflow-y-auto">
             
-            <!-- SECTION 1: VOTING FORM -->
-            <section id="formSection" class="fade-in space-y-5.5">
-                <!-- Welcome Banner Card -->
-                <div class="bg-gradient-to-br from-navy-800 to-navy-900 border border-gold-500/20 p-5 rounded-2.5xl shadow-lg relative overflow-hidden">
-                    <div class="absolute -right-6 -bottom-6 text-gold-500/5 text-8xl pointer-events-none">
+            <!-- SECTION 1: PREMIUM VOTING FORM -->
+            <section id="formSection" class="fade-in space-y-6">
+                <!-- Welcome Invitation Banner -->
+                <div class="bg-navy-800/80 border border-gold-500/30 p-5 rounded-2xl relative overflow-hidden shadow-inner">
+                    <div class="absolute -right-8 -bottom-8 text-gold-500/5 text-8xl pointer-events-none">
                         <i class="fa-solid fa-ship"></i>
                     </div>
-                    
-                    <span class="text-[10px] font-extrabold text-gold-400 uppercase tracking-widest bg-gold-500/10 border border-gold-500/30 px-3 py-1 rounded-full">
-                        หอการค้าไทย และสภาหอการค้าแห่งประเทศไทย
-                    </span>
-                    
-                    <h2 class="text-sm font-bold text-white mt-3.5 leading-relaxed">
-                        เสนอชื่อหน่วยงานเข้ารับรางวัล Popular Vote <span class="text-gold-400">สำเภานาวาทอง</span> ประจำปี 2569
+                    <span class="text-[11px] font-bold text-navy-900 uppercase tracking-widest bg-gold-500 px-3 py-1 rounded-full">บัตรลงคะแนนอิเล็กทรอนิกส์</span>
+                    <h2 class="text-base font-extrabold text-gold-500 mt-3.5 leading-snug">
+                        แบบฟอร์มเสนอชื่อหน่วยงานเข้ารับรางวัล Popular Vote สำเภานาวาทอง ประจำปี 2569
                     </h2>
-                    
-                    <p class="text-[11px] text-slate-300 mt-2.5 leading-relaxed">
-                        มอบแด่หน่วยงานที่เป็น <span class="text-gold-300 font-semibold">Top of Mind</span> โดดเด่น เป็นที่ยอมรับ และมีผลงานประจักษ์ชัดในการบริหารจัดการวิกฤตการณ์ (<span class="italic">Crisis Management</span>) ของประเทศในรอบปี 2568
+                    <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+                        รางวัลหน่วยงานที่เป็น Top of Mind มีความโดดเด่น เป็นที่ยอมรับ และอยู่ในใจสาธารณชนอย่างต่อเนื่อง หรือมีบทบาทสำคัญและมีผลงานเชิงประจักษ์ในการบริหารจัดการวิกฤตการณ์ (Crisis Management) ของประเทศในรอบปี 2568
                     </p>
-
-                    <!-- Countdown Box -->
-                    <div class="mt-4 bg-navy-900/80 border border-gold-500/30 p-3 rounded-xl flex flex-col items-center justify-center">
-                        <span class="text-[10px] text-gold-300 font-bold tracking-wide uppercase flex items-center gap-1">
-                            <i class="fa-solid fa-hourglass-half text-[11px] animate-spin text-gold-400"></i>
-                            ระยะเวลาสิ้นสุดการตอบแบบฟอร์ม
-                        </span>
-                        <span class="text-[11px] text-white font-semibold mt-1">ภายในวันอาทิตย์ที่ 24 กรกฎาคม 2569 เวลา 16.00 น.</span>
-                        <div id="countdown" class="grid grid-cols-4 gap-2 text-center mt-2.5 w-full max-w-[280px]">
-                            <div class="bg-navy-800 p-1.5 rounded-lg border border-gold-500/10"><span id="days" class="block text-sm font-black text-gold-400">-</span><span class="text-[8px] text-slate-400">วัน</span></div>
-                            <div class="bg-navy-800 p-1.5 rounded-lg border border-gold-500/10"><span id="hours" class="block text-sm font-black text-gold-400">-</span><span class="text-[8px] text-slate-400">ชม.</span></div>
-                            <div class="bg-navy-800 p-1.5 rounded-lg border border-gold-500/10"><span id="minutes" class="block text-sm font-black text-gold-400">-</span><span class="text-[8px] text-slate-400">นาที</span></div>
-                            <div class="bg-navy-800 p-1.5 rounded-lg border border-gold-500/10"><span id="seconds" class="block text-sm font-black text-gold-400">-</span><span class="text-[8px] text-slate-400">วิ</span></div>
-                        </div>
+                    <div class="mt-4 pt-3 border-t border-gold-500/10 flex flex-col space-y-1.5">
+                        <p class="text-[11px] text-slate-400 flex items-center space-x-1.5">
+                            <i class="fa-solid fa-circle-info text-gold-500"></i>
+                            <span>เรียนเชิญสมาชิกหอการค้าไทยร่วมโหวตลงคะแนน</span>
+                        </p>
+                        <p class="text-[11px] text-red-400 font-semibold flex items-center space-x-1.5">
+                            <i class="fa-solid fa-clock"></i>
+                            <span>ปิดรับโหวต: วันอาทิตย์ที่ 24 กรกฎาคม 2569 เวลา 16.00 น.</span>
+                        </p>
                     </div>
 
-                    <!-- Cloud Connection Status -->
-                    <div id="connectionStatus" class="mt-3 text-[10px] text-emerald-400 hidden flex items-center justify-center space-x-1.5">
-                        <span class="relative flex h-1.5 w-1.5">
+                    <!-- Online Status Indicator -->
+                    <div id="connectionStatus" class="mt-3 text-[11px] text-emerald-400 hidden flex items-center space-x-1.5 bg-emerald-950/40 px-3 py-1.5 rounded-lg border border-emerald-500/20">
+                        <span class="relative flex h-2 w-2">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
-                        <span class="font-bold tracking-wide">Cloud Database Online</span>
+                        <span>ระบบออนไลน์: เชื่อมโยงฐานข้อมูล Google Sheets เรียบร้อยแล้ว</span>
                     </div>
                 </div>
 
                 <!-- Form Element -->
-                <form id="voteForm" onsubmit="handleVoteSubmit(event)" class="space-y-5">
+                <form id="voteForm" onsubmit="handleVoteSubmit(event)" class="space-y-6">
                     
-                    <!-- Input 1: Voter Fullname -->
+                    <!-- Input 1: Firstname & Lastname -->
                     <div class="space-y-2">
-                        <label for="fullName" class="block text-xs font-bold text-gold-300 uppercase tracking-wider flex items-center space-x-2">
-                            <i class="fa-solid fa-user-tie text-gold-500"></i>
-                            <span>1. ชื่อ - นามสกุล ผู้โหวต <span class="text-rose-500">*</span></span>
+                        <label for="fullName" class="block text-sm font-semibold text-gold-500 flex items-center space-x-2">
+                            <i class="fa-solid fa-signature"></i>
+                            <span>ชื่อ - นามสกุล ผู้โหวต <span class="text-red-500">*</span></span>
                         </label>
                         <div class="relative">
                             <input type="text" id="fullName" required 
-                                   class="w-full pl-11 pr-4 py-3 bg-navy-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:bg-navy-800 focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all outline-none"
-                                   placeholder="เช่น นายสมชาย หอการค้าดีเด่น">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-                                <i class="fa-regular fa-address-card"></i>
+                                   class="w-full pl-11 pr-4 py-3.5 bg-navy-800 border border-gold-500/20 text-white rounded-xl text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all outline-none"
+                                   placeholder="เช่น นายธนภัทร รักดี">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gold-500/60">
+                                <i class="fa-regular fa-user"></i>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Input 2: Voter Organization / Agency -->
+                    <!-- Input 2: Voter's Own Organization -->
                     <div class="space-y-2">
-                        <label for="voterAgency" class="block text-xs font-bold text-gold-300 uppercase tracking-wider flex items-center space-x-2">
-                            <i class="fa-solid fa-building text-gold-500"></i>
-                            <span>2. หน่วยงานของผู้โหวต <span class="text-rose-500">*</span></span>
+                        <label for="voterOrg" class="block text-sm font-semibold text-gold-500 flex items-center space-x-2">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <span>หน่วยงาน / บริษัท ของผู้โหวต <span class="text-red-500">*</span></span>
                         </label>
                         <div class="relative">
-                            <input type="text" id="voterAgency" required 
-                                   class="w-full pl-11 pr-4 py-3 bg-navy-800 border border-slate-700 rounded-xl text-xs text-white placeholder-slate-500 focus:bg-navy-800 focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all outline-none"
-                                   placeholder="เช่น บจก. หอการค้าไทยจำกัด หรือชื่อหน่วยงานของท่าน">
-                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-                                <i class="fa-solid fa-city text-[11px]"></i>
+                            <input type="text" id="voterOrg" required 
+                                   class="w-full pl-11 pr-4 py-3.5 bg-navy-800 border border-gold-500/20 text-white rounded-xl text-sm focus:ring-2 focus:ring-gold-500 focus:border-gold-500 transition-all outline-none"
+                                   placeholder="เช่น บริษัท หอการค้าไทย จำกัด">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gold-500/60">
+                                <i class="fa-solid fa-building"></i>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Input 3: Target Nominated Agency (Select Button Grid) -->
-                    <div class="space-y-3.5">
-                        <label class="block text-xs font-bold text-gold-300 uppercase tracking-wider flex items-center space-x-2">
-                            <i class="fa-solid fa-trophy text-gold-500"></i>
-                            <span>3. เสนอชื่อหน่วยงานเข้ารับรางวัล <span class="text-rose-500">*</span></span>
+                    <!-- Input 3: Agency Popular Vote Selection (Button Grid) -->
+                    <div class="space-y-3">
+                        <label class="block text-sm font-semibold text-gold-500 flex items-center space-x-2">
+                            <i class="fa-solid fa-award"></i>
+                            <span>เลือกหน่วยงานที่ต้องการโหวตรับรางวัล <span class="text-red-500">*</span></span>
                         </label>
                         
-                        <div class="grid grid-cols-1 gap-3.5">
+                        <div class="grid grid-cols-1 gap-4">
                             
                             <!-- Option 3.1: กรมเจรจาการค้าระหว่างประเทศ -->
-                            <div onclick="selectAgency('agency1', this)" class="agency-card border border-slate-700 bg-navy-800 p-4 rounded-xl cursor-pointer hover:border-gold-500/50 hover:bg-navy-800/80 transition-all flex items-start space-x-3.5 relative overflow-hidden group">
-                                <div class="bg-navy-900 text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-900 p-2.5 rounded-lg transition-all flex-shrink-0">
-                                    <i class="fa-solid fa-handshake-simple text-sm"></i>
+                            <div onclick="selectAgency('agency1', this)" class="agency-card border border-gold-500/10 bg-navy-800/50 p-4.5 rounded-2xl cursor-pointer hover:border-gold-500/40 transition-all flex items-start space-x-4 relative overflow-hidden group">
+                                <div class="bg-navy-800 text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-900 p-3 rounded-xl transition-all shadow-md">
+                                    <i class="fa-solid fa-earth-asia text-xl"></i>
                                 </div>
                                 <div class="flex-grow pr-6">
-                                    <h4 class="text-xs font-black text-white leading-snug">กรมเจรจาการค้าระหว่างประเทศ</h4>
-                                    <p class="text-[10px] text-slate-400 font-medium">กระทรวงพาณิชย์</p>
-                                    <p class="text-[10px] text-gold-200/80 mt-2.5 bg-navy-900/50 p-2.5 rounded-lg border border-gold-500/10 leading-relaxed italic">
-                                        "FTA ขับเคลื่อนยุทธศาสตร์ - ทลายกำแพงการค้า เปิดประตูสินค้าไทยสู่เวทีโลก เพิ่มโอกาสสร้างรายได้ให้เกษตรกรและผู้ประกอบการอย่างไร้พรมแดน"
+                                    <h4 class="text-sm font-bold text-white group-hover:text-gold-500 transition-colors leading-tight">กรมเจรจาการค้าระหว่างประเทศ กระทรวงพาณิชย์</h4>
+                                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                                        <strong>FTA ขับเคลื่อนยุทธศาสตร์</strong> - ทลายกำแพงการค้า เปิดประตูสินค้าไทยสู่เวทีโลก เพิ่มโอกาสสร้างรายได้ให้เกษตรกรและผู้ประกอบการอย่างไร้พรมแดน
                                     </p>
                                 </div>
-                                <div class="radio-check absolute top-4 right-4 text-gold-500 hidden">
-                                    <i class="fa-solid fa-circle-check text-base"></i>
+                                <div class="radio-check absolute top-4 right-4 text-gold-500 hidden animate-pulse">
+                                    <i class="fa-solid fa-circle-check text-2xl"></i>
                                 </div>
                             </div>
 
                             <!-- Option 3.2: กระทรวงการคลัง -->
-                            <div onclick="selectAgency('agency2', this)" class="agency-card border border-slate-700 bg-navy-800 p-4 rounded-xl cursor-pointer hover:border-gold-500/50 hover:bg-navy-800/80 transition-all flex items-start space-x-3.5 relative overflow-hidden group">
-                                <div class="bg-navy-900 text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-900 p-2.5 rounded-lg transition-all flex-shrink-0">
-                                    <i class="fa-solid fa-coins text-sm"></i>
+                            <div onclick="selectAgency('agency2', this)" class="agency-card border border-gold-500/10 bg-navy-800/50 p-4.5 rounded-2xl cursor-pointer hover:border-gold-500/40 transition-all flex items-start space-x-4 relative overflow-hidden group">
+                                <div class="bg-navy-800 text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-900 p-3 rounded-xl transition-all shadow-md">
+                                    <i class="fa-solid fa-wallet text-xl"></i>
                                 </div>
                                 <div class="flex-grow pr-6">
-                                    <h4 class="text-xs font-black text-white leading-snug">กระทรวงการคลัง</h4>
-                                    <p class="text-[10px] text-slate-400 font-medium">สถาบันการเงินและนโยบายการเงิน</p>
-                                    <p class="text-[10px] text-gold-200/80 mt-2.5 bg-navy-900/50 p-2.5 rounded-lg border border-gold-500/10 leading-relaxed italic">
-                                        "ดิจิทัลวอลเล็ต - อัดฉีดเม็ดเงินตรงถึงมือประชาชน พลิกฟื้นเศรษฐกิจฐานราก และจุดประกายประเทศไทยสู่เศรษฐกิจดิจิทัล"
+                                    <h4 class="text-sm font-bold text-white group-hover:text-gold-500 transition-colors leading-tight">กระทรวงการคลัง</h4>
+                                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                                        <strong>ดิจิทัลวอลเล็ต</strong> - อัดฉีดเม็ดเงินตรงถึงมือประชาชน พลิกฟื้นเศรษฐกิจฐานราก และจุดประกายประเทศไทยสู่เศรษฐกิจดิจิทัล
                                     </p>
                                 </div>
-                                <div class="radio-check absolute top-4 right-4 text-gold-500 hidden">
-                                    <i class="fa-solid fa-circle-check text-base"></i>
+                                <div class="radio-check absolute top-4 right-4 text-gold-500 hidden animate-pulse">
+                                    <i class="fa-solid fa-circle-check text-2xl"></i>
                                 </div>
                             </div>
 
-                            <!-- Option 3.3: กองทัพไทย -->
-                            <div onclick="selectAgency('agency3', this)" class="agency-card border border-slate-700 bg-navy-800 p-4 rounded-xl cursor-pointer hover:border-gold-500/50 hover:bg-navy-800/80 transition-all flex items-start space-x-3.5 relative overflow-hidden group">
-                                <div class="bg-navy-900 text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-900 p-2.5 rounded-lg transition-all flex-shrink-0">
-                                    <i class="fa-solid fa-shield-halved text-sm"></i>
+                            <!-- Option 3.3: กองทัพไทย กระทรวงกลาโหม -->
+                            <div onclick="selectAgency('agency3', this)" class="agency-card border border-gold-500/10 bg-navy-800/50 p-4.5 rounded-2xl cursor-pointer hover:border-gold-500/40 transition-all flex items-start space-x-4 relative overflow-hidden group">
+                                <div class="bg-navy-800 text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-900 p-3 rounded-xl transition-all shadow-md">
+                                    <i class="fa-solid fa-shield-halved text-xl"></i>
                                 </div>
                                 <div class="flex-grow pr-6">
-                                    <h4 class="text-xs font-black text-white leading-snug">กองทัพไทย</h4>
-                                    <p class="text-[10px] text-slate-400 font-medium">กระทรวงกลาโหม</p>
-                                    <p class="text-[10px] text-gold-200/80 mt-2.5 bg-navy-900/50 p-2.5 rounded-lg border border-gold-500/10 leading-relaxed italic">
-                                        "แก้ไขความไม่สงบชายแดนไทย-กัมพูชา - คืนความสงบสุขสู่พื้นที่ชายแดน ปกป้องอธิปไตย และสร้างความมั่นใจให้ประชาชนใช้ชีวิตอย่างปลอดภัย"
+                                    <h4 class="text-sm font-bold text-white group-hover:text-gold-500 transition-colors leading-tight">กองทัพไทย กระทรวงกลาโหม</h4>
+                                    <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+                                        <strong>แก้ไขความไม่สงบชายแดนไทย-กัมพูชา</strong> - คืนความสงบสุขสู่พื้นที่ชายแดน ปกป้องอธิปไตย และสร้างความมั่นใจให้ประชาชนใช้ชีวิตอย่างปลอดภัย
                                     </p>
                                 </div>
-                                <div class="radio-check absolute top-4 right-4 text-gold-500 hidden">
-                                    <i class="fa-solid fa-circle-check text-base"></i>
+                                <div class="radio-check absolute top-4 right-4 text-gold-500 hidden animate-pulse">
+                                    <i class="fa-solid fa-circle-check text-2xl"></i>
                                 </div>
                             </div>
 
@@ -256,180 +261,698 @@
                         <input type="hidden" id="selectedAgencyValue" name="agency" required>
                     </div>
 
-                    <!-- Submit Button with Gold gradient and Navy Text -->
-                    <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 hover:from-gold-300 hover:to-gold-500 active:scale-[0.98] transition-all text-navy-900 font-black py-4 px-4 rounded-xl shadow-lg flex items-center justify-center space-x-2 text-sm border border-gold-300">
-                        <i class="fa-solid fa-ship" id="submitIcon"></i>
-                        <span id="submitText">ร่วมเสนอชื่อโหวต</span>
+                    <!-- Submit Button -->
+                    <button type="submit" id="submitBtn" class="w-full shine-effect bg-gradient-to-r from-gold-600 via-gold-500 to-gold-700 hover:from-gold-500 hover:to-gold-600 active:scale-[0.98] transition-all text-navy-900 font-extrabold py-4 px-4 rounded-xl shadow-lg shadow-gold-500/10 flex items-center justify-center space-x-2 text-base">
+                        <i class="fa-solid fa-paper-plane" id="submitIcon"></i>
+                        <span id="submitText">ส่งคะแนนโหวตยอดนิยม</span>
                     </button>
                 </form>
             </section>
 
             <!-- SECTION 2: RESULTS DASHBOARD -->
-            <section id="dashboardSection" class="hidden fade-in space-y-5">
+            <section id="dashboardSection" class="hidden fade-in space-y-6">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-xs font-bold text-gold-300 flex items-center space-x-2 uppercase tracking-wide">
-                        <i class="fa-solid fa-chart-line text-gold-500"></i>
-                        <span>สรุปรายงานผลการเสนอชื่อโหวต</span>
+                    <h2 class="text-base font-bold text-gold-500 flex items-center space-x-2">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>สรุปรายงานคะแนน Popular Vote (เฉพาะแอดมิน)</span>
                     </h2>
-                    <!-- Reset Data (Local) -->
-                    <button onclick="confirmReset()" class="text-[10px] text-rose-400 hover:text-rose-300 flex items-center space-x-1 font-medium transition-colors">
-                        <i class="fa-solid fa-eraser"></i>
-                        <span>เคลียร์ข้อมูลในเครื่อง</span>
+                    
+                    <!-- Local reset option -->
+                    <button onclick="confirmReset()" class="text-xs text-red-400 hover:text-red-500 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>ล้างข้อมูลเครื่องนี้</span>
                     </button>
                 </div>
 
-                <!-- Google Sheets Cloud Setup -->
-                <div class="bg-navy-800/80 border border-gold-500/25 p-4 rounded-xl space-y-3 shadow-md">
-                    <button onclick="toggleSettings()" class="w-full flex justify-between items-center text-[11px] font-extrabold text-gold-300">
+                <!-- Google Sheets Cloud Setup (Jan's Integration Panel) -->
+                <div class="bg-navy-800 border border-gold-500/20 p-4.5 rounded-2xl space-y-3 shadow-inner">
+                    <button onclick="toggleSettings()" class="w-full flex justify-between items-center text-xs font-bold text-slate-300">
                         <span class="flex items-center space-x-2">
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <span>การเชื่อมต่อฐานข้อมูล Google Sheets</span>
+                            <i class="fa-solid fa-cloud-arrow-up text-gold-500"></i>
+                            <span>การเชื่อมต่อ Google Sheets ออนไลน์</span>
                         </span>
                         <i id="settingsChevron" class="fa-solid fa-chevron-down transition-transform text-gold-500"></i>
                     </button>
-                    <div id="settingsPanel" class="hidden space-y-3 pt-2.5 border-t border-navy-900">
-                        <p class="text-[10px] text-slate-300 leading-relaxed">
-                            สำหรับแจน: นำ URL ของ Apps Script ที่คัดลอกได้ตามคู่มือมาวางด้านล่างเพื่อผสานผลโหวตของทุกคนเข้าด้วยกัน
+                    <div id="settingsPanel" class="hidden space-y-3.5 pt-3 border-t border-gold-500/10">
+                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                            นำ Web App URL (ที่ลงท้ายด้วย `/exec`) ที่ได้จากคู่มือในหน้าระบบมาวางด้านล่างเพื่อเชื่อมโยงข้อมูลเข้าชีตส่วนตัวแบบเรียลไทม์
                         </p>
                         <div class="space-y-1.5">
-                            <label class="text-[9px] font-bold text-gold-400/80 uppercase tracking-widest">Google Apps Script URL</label>
+                            <label class="text-[10px] font-bold text-gold-500 uppercase tracking-widest">Google Apps Script URL</label>
                             <input type="url" id="sheetUrlInput" 
-                                   class="w-full px-3 py-2 bg-navy-900 border border-slate-700 rounded-lg text-[10px] text-white outline-none focus:ring-2 focus:ring-gold-500"
+                                   class="w-full px-3 py-2.5 bg-navy-950 border border-gold-500/20 rounded-xl text-xs text-white outline-none focus:ring-1 focus:ring-gold-500"
                                    placeholder="https://script.google.com/macros/s/.../exec">
                         </div>
-                        <button onclick="saveSheetUrl()" class="w-full bg-gold-500 hover:bg-gold-600 active:scale-95 text-navy-900 font-bold py-2 px-3 rounded-lg text-[10px] transition-all flex items-center justify-center space-x-1 shadow-sm">
+                        <button onclick="saveSheetUrl()" class="w-full bg-gold-500 hover:bg-gold-600 text-navy-900 font-bold py-2.5 px-3 rounded-xl text-xs transition-all flex items-center justify-center space-x-1">
                             <i class="fa-solid fa-floppy-disk"></i>
-                            <span>บันทึกการเชื่อมต่อระบบ</span>
+                            <span>บันทึกและเชื่อมต่อระบบ</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- Total Count Stats -->
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-navy-800 border border-gold-500/15 p-4 rounded-xl text-center shadow-inner">
-                        <p class="text-[10px] text-gold-300 font-bold uppercase tracking-wider">ผู้เสนอชื่อทั้งหมด</p>
-                        <h3 id="totalVotes" class="text-3xl font-black text-white mt-1">0</h3>
-                        <p class="text-[9px] text-slate-400 mt-1">บันทึกใน Local Storage</p>
+                    <div class="bg-navy-800 border border-gold-500/15 p-4 rounded-xl text-center">
+                        <p class="text-xs text-gold-500 font-semibold uppercase tracking-wider">คะแนนโหวตสะสม</p>
+                        <h3 id="totalVotes" class="text-4xl font-extrabold text-white mt-1">0</h3>
+                        <p class="text-[10px] text-slate-400 mt-1">จากเบราว์เซอร์เครื่องนี้</p>
                     </div>
-                    <div class="bg-navy-800 border border-emerald-500/20 p-4 rounded-xl text-center flex flex-col justify-center items-center shadow-inner">
-                        <button onclick="exportToCSV()" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold py-2.5 px-3 rounded-lg shadow-md transition-all text-[11px] flex items-center justify-center space-x-1.5">
-                            <i class="fa-solid fa-file-excel text-xs"></i>
-                            <span>โหลด Excel (CSV)</span>
+                    <div class="bg-navy-800 border border-gold-500/15 p-4 rounded-xl text-center flex flex-col justify-center items-center">
+                        <button onclick="exportToCSV()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold py-2.5 px-3 rounded-xl shadow-md transition-all text-xs flex items-center justify-center space-x-1.5">
+                            <i class="fa-solid fa-file-excel text-sm"></i>
+                            <span>ส่งออกไฟล์ Excel</span>
                         </button>
-                        <p class="text-[9px] text-emerald-400 mt-2">ดาวน์โหลดเพื่อดูชื่อ, สังกัด และหน่วยงาน</p>
+                        <p class="text-[10px] text-slate-400 mt-2">ดาวน์โหลดเพื่อดูชื่อผู้โหวต</p>
                     </div>
                 </div>
 
                 <!-- Chart Container -->
-                <div class="bg-navy-800 border border-gold-500/15 p-4 rounded-xl flex flex-col items-center shadow-md">
-                    <h3 class="text-[11px] font-bold text-gold-300 uppercase mb-4 self-start">สัดส่วนคะแนนโหวตยอดนิยม (%)</h3>
-                    <div class="relative w-full max-w-[210px] h-[210px] flex items-center justify-center">
+                <div class="bg-navy-800 border border-gold-500/10 p-5 rounded-2xl flex flex-col items-center">
+                    <h3 class="text-xs font-bold text-slate-300 mb-4 self-start">สัดส่วนคะแนนโหวตสะสม (%)</h3>
+                    <div class="relative w-full max-w-[240px] h-[240px] flex items-center justify-center">
                         <canvas id="voteChart"></canvas>
                         <!-- Chart Fallback when empty -->
                         <div id="chartFallback" class="absolute inset-0 flex flex-col items-center justify-center bg-navy-800 text-slate-400 text-xs hidden">
-                            <i class="fa-solid fa-receipt text-3xl mb-2 text-gold-500/30"></i>
-                            <span>ยังไม่มีประวัติการโหวตเข้ามา</span>
+                            <i class="fa-solid fa-box-open text-4xl mb-2 text-slate-600"></i>
+                            <span>ยังไม่มีคะแนนถูกลงโหวต</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- List of Voters (Recent Activity) -->
                 <div class="space-y-3">
-                    <h3 class="text-[10px] font-bold text-gold-400 uppercase tracking-widest">รายชื่อผู้ทำแบบฟอร์มล่าสุด</h3>
-                    <div id="voterList" class="space-y-2 max-h-52 overflow-y-auto pr-1">
-                        <!-- Dynamic content -->
+                    <h3 class="text-xs font-bold text-gold-500 uppercase tracking-widest">ข้อมูลผู้เสนอชื่อล่าสุด</h3>
+                    <div id="voterList" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
+                        <!-- Dynamic generated lists -->
                     </div>
                 </div>
             </section>
 
             <!-- SECTION 3: SUCCESS ANIMATION -->
             <section id="successSection" class="hidden fade-in text-center py-10 space-y-6">
-                <div class="w-24 h-24 bg-gold-500/10 text-gold-400 rounded-full flex items-center justify-center mx-auto shadow-xl ring-4 ring-gold-500/20">
-                    <i class="fa-solid fa-award text-5xl animate-bounce"></i>
+                <div class="w-24 h-24 bg-gradient-to-br from-gold-500 to-gold-700 text-navy-900 rounded-full flex items-center justify-center mx-auto shadow-xl shadow-gold-500/20">
+                    <i class="fa-solid fa-circle-check text-5xl animate-bounce"></i>
                 </div>
-                <div class="space-y-3">
-                    <h2 class="text-xl font-extrabold text-gold-300">ส่งข้อมูลเสนอชื่อสำเร็จ</h2>
-                    <p class="text-xs text-slate-300 max-w-xs mx-auto leading-relaxed">
-                        ขอบพระคุณสมาชิกหอการค้าไทยทุกท่านอย่างสูง ระบบได้เก็บบันทึกข้อมูลของท่านเรียบร้อยแล้วอย่างสมบูรณ์
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-bold text-gold-500">บันทึกโหวตสำเร็จ!</h2>
+                    <p class="text-sm text-slate-300 max-w-xs mx-auto">
+                        ขอบพระคุณสมาชิกหอการค้าไทยทุกท่านที่ร่วมเสนอชื่อผู้เข้ารับรางวัล Popular Vote สำเภานาวาทอง 2569
                     </p>
                 </div>
-                <div class="pt-3">
-                    <button onclick="resetToNewVote()" class="inline-flex items-center space-x-2 bg-gradient-to-r from-gold-500 to-gold-600 text-navy-900 font-extrabold px-6 py-3.5 rounded-xl shadow-lg transition-all active:scale-95 text-xs border border-gold-300">
-                        <i class="fa-solid fa-rotate-left"></i>
-                        <span>ทำการส่งผลโหวตเพิ่มเติม</span>
+                <div class="pt-4">
+                    <button onclick="resetToNewVote()" class="inline-flex items-center space-x-2 bg-navy-800 border border-gold-500/30 hover:bg-navy-950 text-gold-500 font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all active:scale-95 text-sm">
+                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                        <span>ทำการโหวตใหม่อีกครั้ง</span>
                     </button>
                 </div>
             </section>
         </div>
 
+        <!-- Custom Premium Password & Auth Dialog Overlay -->
+        <div id="adminModal" class="fixed inset-0 bg-navy-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+            <div class="bg-navy-900 border border-gold-500/30 p-6 rounded-2xl w-80 shadow-2xl space-y-4 transform scale-95 transition-transform duration-300">
+                <div class="text-center">
+                    <div class="bg-gold-500/10 text-gold-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fa-solid fa-lock text-xl"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-gold-500">สำหรับผู้ดูแลระบบ</h3>
+                    <p class="text-[11px] text-slate-400 mt-1">กรุณากรอกรหัสผ่านเพื่อเข้าใช้งาน</p>
+                </div>
+                <input type="password" id="adminPassword" class="w-full px-3 py-2.5 bg-navy-950 border border-gold-500/20 rounded-xl text-sm text-white focus:outline-none focus:ring-1 focus:ring-gold-500 text-center tracking-widest" placeholder="••••••••">
+                <div class="flex space-x-2">
+                    <button onclick="closeAdminModal()" class="flex-1 py-2.5 bg-navy-800 hover:bg-navy-750 text-slate-300 rounded-xl text-xs font-bold transition-all">ยกเลิก</button>
+                    <button onclick="verifyAdminPassword()" class="flex-1 py-2.5 bg-gold-500 hover:bg-gold-600 text-navy-900 rounded-xl text-xs font-bold transition-all">ยืนยัน</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Confirmation and Dialog Modal (Replaces native alert/confirm) -->
+        <div id="customDialog" class="fixed inset-0 bg-navy-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-all duration-200">
+            <div class="bg-navy-900 border border-gold-500/30 p-6 rounded-2xl w-80 shadow-2xl text-center space-y-4 transform scale-95 transition-all duration-200">
+                <div id="dialogIcon" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto"></div>
+                <h3 id="dialogTitle" class="text-sm font-bold text-white"></h3>
+                <p id="dialogMessage" class="text-[11px] text-slate-400 leading-relaxed"></p>
+                <div class="flex space-x-2" id="dialogButtons"></div>
+            </div>
+        </div>
+
         <!-- Custom Notification Toast -->
-        <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-navy-800 border border-gold-500/50 text-white px-5 py-3.5 rounded-xl shadow-2xl text-xs font-semibold tracking-wide flex items-center space-x-2.5 transition-all opacity-0 translate-y-10 pointer-events-none z-50">
-            <span id="toastIcon"><i class="fa-solid fa-circle-info text-gold-400"></i></span>
+        <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-950 border border-gold-500/20 text-white px-5 py-3.5 rounded-xl shadow-2xl text-xs font-medium tracking-wide flex items-center space-x-2.5 transition-all opacity-0 translate-y-10 pointer-events-none z-50">
+            <span id="toastIcon"><i class="fa-solid fa-circle-info text-gold-500"></i></span>
             <span id="toastMessage">แจ้งเตือนข้อมูล</span>
         </div>
 
-        <!-- Footer credit/branding -->
-        <footer class="bg-navy-950 border-t border-gold-500/10 px-6 py-4 text-center text-[10px] text-slate-400">
-            <p>© 2026 คณะกรรมการรางวัลสำเภานาวาทอง • หอการค้าไทย</p>
+        <!-- Footer credit/branding with Secret Lock Trigger icon -->
+        <footer class="bg-navy-950 border-t border-gold-500/10 px-6 py-4.5 text-center text-[10px] text-slate-400 flex justify-center items-center space-x-1">
+            <span>© พิธีมอบรางวัลสำเภานาวาทอง ประจำปี 2569 • หอการค้าไทย</span>
+            <button onclick="openAdminModal()" class="text-gold-500/40 hover:text-gold-500 transition-colors ml-1 focus:outline-none focus:ring-0" title="Admin">
+                <i class="fa-solid fa-key text-[9px]"></i>
+            </button>
         </footer>
     </main>
 
     <script>
         // State variables
         let mockVotes = [
-            { id: 1, name: "ดร.วิโรจน์ แสนประดับ", voterAgency: "สภาหอการค้าจังหวัดเชียงใหม่", agency: "agency1", agencyText: "กรมเจรจาการค้าระหว่างประเทศ กระทรวงพาณิชย์", timestamp: "2026-07-14 11:22" },
-            { id: 2, name: "คุณพรทิพย์ วาณิชย์โรจน์", voterAgency: "บจก. ค้าไทยอิมพอร์ต", agency: "agency2", agencyText: "กระทรวงการคลัง", timestamp: "2026-07-14 13:45" },
-            { id: 3, name: "นายแพทย์พลกฤษณ์ รักดี", voterAgency: "รพ. สวนศิริ", agency: "agency3", agencyText: "กองทัพไทย กระทรวงกลาโหม", timestamp: "2026-07-14 14:10" }
+            { id: 1, name: "นายทักษิณ มั่งมี", org: "บจก. สยามเทรดดิ้ง", agency: "agency1", agencyText: "กรมเจรจาการค้าระหว่างประเทศ กระทรวงพาณิชย์", timestamp: "2026-07-14 14:15" },
+            { id: 2, name: "นางกอบกาญจน์ สุขใจ", org: "หจก. ภาคใต้พาณิชย์", agency: "agency2", agencyText: "กระทรวงการคลัง", timestamp: "2026-07-14 14:18" },
+            { id: 3, name: "นายประวิทย์ มั่นคง", org: "บมจ. ไทยซิเคียวริตี้", agency: "agency3", agencyText: "กองทัพไทย กระทรวงกลาโหม", timestamp: "2026-07-14 14:20" }
         ];
 
         let votes = [];
         let myChart = null;
         let googleSheetUrl = "";
+        let pendingConfirmCallback = null;
 
-        // Deadline target date: Sunday July 24, 2026 at 16:00 (Thai Time Zone / Asia/Bangkok)
-        const deadlineDate = new Date("2026-07-24T16:00:00+07:00").getTime();
-
-        // Initialize App data on load
+        // Initialization
         window.onload = function() {
-            // Setup & start Countdown
-            initCountdown();
-            setInterval(initCountdown, 1000);
-
-            // Fetch stored local votes
-            const storedVotes = localStorage.getItem('sampaonawatong_votes_2569');
+            // Fetch localStorage values
+            const storedVotes = localStorage.getItem('sampaonawathong_votes');
             if (storedVotes) {
                 votes = JSON.parse(storedVotes);
             } else {
+                // Populate with pre-filled premium mock records
                 votes = [...mockVotes];
-                localStorage.setItem('sampaonawatong_votes_2569', JSON.stringify(votes));
+                localStorage.setItem('sampaonawathong_votes', JSON.stringify(votes));
             }
 
-            // Retrieve Google Sheets Web App URL from device localStorage
-            googleSheetUrl = localStorage.getItem('google_sheet_url_2569') || "";
+            // Sheets sync link setup
+            googleSheetUrl = localStorage.getItem('sampaonawathong_sheet_url') || "";
             document.getElementById('sheetUrlInput').value = googleSheetUrl;
             updateConnectionBadge();
 
             updateDashboard();
+
+            // Handle press enter inside Admin password input field
+            document.getElementById('adminPassword').addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    verifyAdminPassword();
+                }
+            });
         }
 
-        // Live Countdown calculation
-        function initCountdown() {
-            const now = new Date().getTime();
-            const distance = deadlineDate - now;
+        // Custom Dialog Modal Controllers (Avoiding native popups)
+        function showCustomAlert(title, message, iconType = 'info') {
+            const dialog = document.getElementById('customDialog');
+            const dTitle = document.getElementById('dialogTitle');
+            const dMessage = document.getElementById('dialogMessage');
+            const dIcon = document.getElementById('dialogIcon');
+            const dButtons = document.getElementById('dialogButtons');
 
-            const daysSpan = document.getElementById("days");
-            const hoursSpan = document.getElementById("hours");
-            const minsSpan = document.getElementById("minutes");
-            const secsSpan = document.getElementById("seconds");
+            dTitle.textContent = title;
+            dMessage.textContent = message;
 
-            if (distance < 0) {
-                daysSpan.innerText = "0";
-                hoursSpan.innerText = "0";
-                minsSpan.innerText = "0";
-                secsSpan.innerText = "0";
+            // Apply Icon styles
+            if (iconType === 'error') {
+                dIcon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto bg-red-950/40 text-red-400 border border-red-500/20";
+                dIcon.innerHTML = '<i class="fa-solid fa-circle-xmark text-xl"></i>';
+            } else if (iconType === 'success') {
+                dIcon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto bg-emerald-950/40 text-emerald-400 border border-emerald-500/20";
+                dIcon.innerHTML = '<i class="fa-solid fa-circle-check text-xl"></i>';
+            } else {
+                dIcon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto bg-gold-950/40 text-gold-500 border border-gold-500/20";
+                dIcon.innerHTML = '<i class="fa-solid fa-info text-xl"></i>';
+            }
+
+            // Generate Action buttons
+            dButtons.innerHTML = `
+                <button onclick="closeCustomDialog()" class="w-full py-2.5 bg-gold-500 hover:bg-gold-600 text-navy-900 rounded-xl text-xs font-extrabold transition-all">
+                    ตกลง
+                </button>
+            `;
+
+            // Open Animation
+            dialog.classList.remove('hidden');
+            setTimeout(() => {
+                dialog.classList.remove('opacity-0');
+                dialog.querySelector('div').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function showCustomConfirm(title, message, onConfirm, iconType = 'warning') {
+            const dialog = document.getElementById('customDialog');
+            const dTitle = document.getElementById('dialogTitle');
+            const dMessage = document.getElementById('dialogMessage');
+            const dIcon = document.getElementById('dialogIcon');
+            const dButtons = document.getElementById('dialogButtons');
+
+            dTitle.textContent = title;
+            dMessage.textContent = message;
+            pendingConfirmCallback = onConfirm;
+
+            dIcon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto bg-amber-950/40 text-amber-500 border border-amber-500/20";
+            dIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-xl"></i>';
+
+            // Generate Confirm buttons
+            dButtons.innerHTML = `
+                <button onclick="closeCustomDialog()" class="flex-1 py-2.5 bg-navy-800 hover:bg-navy-750 text-slate-300 rounded-xl text-xs font-bold transition-all">ยกเลิก</button>
+                <button onclick="triggerConfirmAction()" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition-all">ยืนยัน</button>
+            `;
+
+            // Open Animation
+            dialog.classList.remove('hidden');
+            setTimeout(() => {
+                dialog.classList.remove('opacity-0');
+                dialog.querySelector('div').classList.remove('scale-95');
+            }, 10);
+        }
+
+        function triggerConfirmAction() {
+            if (pendingConfirmCallback) {
+                pendingConfirmCallback();
+            }
+            closeCustomDialog();
+        }
+
+        function closeCustomDialog() {
+            const dialog = document.getElementById('customDialog');
+            dialog.classList.add('opacity-0');
+            dialog.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                dialog.classList.add('hidden');
+                pendingConfirmCallback = null;
+            }, 200);
+        }
+
+        // Admin Auth Modal Controllers
+        function openAdminModal() {
+            const modal = document.getElementById('adminModal');
+            document.getElementById('adminPassword').value = '';
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                document.getElementById('adminPassword').focus();
+            }, 10);
+        }
+
+        function closeAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function verifyAdminPassword() {
+            const pw = document.getElementById('adminPassword').value;
+            if (pw === 'jan2569') {
+                closeAdminModal();
+                // Reveal the Results Dashboard navigation button
+                document.getElementById('dashboardBtn').classList.remove('hidden');
+                showToast('เข้าสู่ระบบแอดมินสำเร็จ! ปุ่ม "ดูผลโหวต" ได้รับการปลดล็อกแล้ว', '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
+                
+                // Automatically switch view to dashboard for Jan
+                toggleView('dashboard');
+            } else {
+                showCustomAlert('การยืนยันตัวตนล้มเหลว', 'รหัสผ่านสำหรับผู้ดูแลระบบไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง', 'error');
+            }
+        }
+
+        // Toggle Integration Area
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            const chevron = document.getElementById('settingsChevron');
+            panel.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        // Save sheet URL
+        function saveSheetUrl() {
+            const urlInput = document.getElementById('sheetUrlInput').value.trim();
+            if (urlInput === "") {
+                localStorage.removeItem('sampaonawathong_sheet_url');
+                googleSheetUrl = "";
+                showToast('ยกเลิกเชื่อมโยงข้อมูล เรียบร้อยแล้ว', '<i class="fa-solid fa-circle-info text-amber-500"></i>');
+            } else if (urlInput.startsWith('https://script.google.com/')) {
+                localStorage.setItem('sampaonawathong_sheet_url', urlInput);
+                googleSheetUrl = urlInput;
+                showToast('บันทึกที่ตั้งและเชื่อมโยงเครือข่ายสำเร็จ', '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
+            } else {
+                showToast('รูปแบบ URL ไม่ถูกต้อง กรุณากรอก Web App URL ของท่าน', '<i class="fa-solid fa-triangle-exclamation text-red-500"></i>');
+            }
+            updateConnectionBadge();
+        }
+
+        function updateConnectionBadge() {
+            const badge = document.getElementById('connectionStatus');
+            if (googleSheetUrl) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        // Interactive Choice Styling Selection
+        function selectAgency(agencyId, element) {
+            // Reset state
+            document.querySelectorAll('.agency-card').forEach(card => {
+                card.classList.remove('border-gold-500', 'bg-gold-500/5');
+                card.classList.add('border-gold-500/10', 'bg-navy-800/50');
+                card.querySelector('.radio-check').classList.add('hidden');
+                
+                // Reset internal text and icon indicators
+                const titleText = card.querySelector('h4');
+                const iconBox = card.querySelector('.group-hover\\:bg-gold-500');
+                if (titleText) titleText.classList.remove('text-gold-500');
+                if (iconBox) {
+                    iconBox.classList.add('bg-navy-800', 'text-gold-500');
+                    iconBox.classList.remove('bg-gold-500', 'text-navy-900');
+                }
+            });
+
+            // Set chosen styles
+            element.classList.remove('border-gold-500/10', 'bg-navy-800/50');
+            element.classList.add('border-gold-500', 'bg-gold-500/5');
+            element.querySelector('.radio-check').classList.remove('hidden');
+            
+            const activeTitle = element.querySelector('h4');
+            const activeIconBox = element.querySelector('.bg-navy-800');
+            if (activeTitle) activeTitle.classList.add('text-gold-500');
+            if (activeIconBox) {
+                activeIconBox.classList.remove('bg-navy-800', 'text-gold-500');
+                activeIconBox.classList.add('bg-gold-500', 'text-navy-900');
+            }
+
+            // Update form payload
+            document.getElementById('selectedAgencyValue').value = agencyId;
+        }
+
+        // Show customizable Toast
+        function showToast(message, iconHTML) {
+            const toast = document.getElementById('toast');
+            const msgEl = document.getElementById('toastMessage');
+            const iconEl = document.getElementById('toastIcon');
+
+            msgEl.textContent = message;
+            if (iconHTML) {
+                iconEl.innerHTML = iconHTML;
+            } else {
+                iconEl.innerHTML = '<i class="fa-solid fa-circle-info text-gold-500"></i>';
+            }
+
+            toast.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            toast.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                toast.classList.remove('opacity-100', 'translate-y-0');
+            }, 3000);
+        }
+
+        // Switch layout state view
+        function toggleView(view) {
+            const formSection = document.getElementById('formSection');
+            const dashboardSection = document.getElementById('dashboardSection');
+            const successSection = document.getElementById('successSection');
+            const dashboardBtn = document.getElementById('dashboardBtn');
+            const voteFormBtn = document.getElementById('voteFormBtn');
+
+            if (view === 'dashboard') {
+                formSection.classList.add('hidden');
+                successSection.classList.add('hidden');
+                dashboardSection.classList.remove('hidden');
+                dashboardBtn.classList.add('hidden');
+                voteFormBtn.classList.remove('hidden');
+                updateDashboard();
+            } else if (view === 'form') {
+                dashboardSection.classList.add('hidden');
+                successSection.classList.add('hidden');
+                formSection.classList.remove('hidden');
+                voteFormBtn.classList.add('hidden');
+                // Only show dashboard button if it's unlocked (not containing hidden class in code)
+                if (dashboardBtn.classList.contains('hidden') === false || document.getElementById('dashboardBtn').style.display !== 'none') {
+                    dashboardBtn.classList.remove('hidden');
+                }
+            }
+        }
+
+        // Submit form data
+        async function handleVoteSubmit(event) {
+            event.preventDefault();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const voterOrg = document.getElementById('voterOrg').value.trim();
+            const selectedAgency = document.getElementById('selectedAgencyValue').value;
+
+            if (!fullName) {
+                showToast('กรุณากรอก ชื่อ-นามสกุล', '<i class="fa-solid fa-exclamation-circle text-red-500"></i>');
+                return;
+            }
+            if (!voterOrg) {
+                showToast('กรุณากรอกหน่วยงานผู้โหวต', '<i class="fa-solid fa-exclamation-circle text-red-500"></i>');
+                return;
+            }
+            if (!selectedAgency) {
+                showToast('กรุณาคลิกเลือกหน่วยงานรับรางวัล', '<i class="fa-solid fa-exclamation-circle text-red-500"></i>');
                 return;
             }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const agencyMap = {
+                'agency1': 'กรมเจรจาการค้าระหว่างประเทศ กระทรวงพาณิชย์',
+                'agency2': 'กระทรวงการคลัง',
+                'agency3': 'กองทัพไทย กระทรวงกลาโหม'
+            };
+
+            const now = new Date();
+            const formattedDate = now.getFullYear() + '-' + 
+                                  String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                                  String(now.getDate()).padStart(2, '0') + ' ' + 
+                                  String(now.getHours()).padStart(2, '0') + ':' + 
+                                  String(now.getMinutes()).padStart(2, '0');
+
+            const payload = {
+                id: Date.now(),
+                voterName: fullName,
+                voterOrg: voterOrg,
+                votedAgency: agencyMap[selectedAgency],
+                timestamp: formattedDate
+            };
+
+            // Setup loading state
+            const submitBtn = document.getElementById('submitBtn');
+            const submitText = document.getElementById('submitText');
+            const submitIcon = document.getElementById('submitIcon');
+            
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+            submitText.textContent = "กำลังลงทะเบียนส่งผลโหวต...";
+            submitIcon.className = "fa-solid fa-circle-notch animate-spin";
+
+            // Submit Online to Google Sheets (Jan's Script Integration)
+            if (googleSheetUrl) {
+                try {
+                    await fetch(googleSheetUrl, {
+                        method: 'POST',
+                        mode: 'no-cors', // Avoid complex local preflight CORS issues
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    showToast('บันทึกลง Google Sheets และระบบคลาวด์แล้ว!', '<i class="fa-solid fa-cloud text-emerald-400"></i>');
+                } catch (err) {
+                    console.error("Sheet Connection Error: ", err);
+                    showToast('ระบบคลาวด์ขัดข้อง บันทึกผลสำรองลงเครื่องแทน', '<i class="fa-solid fa-triangle-exclamation text-amber-500"></i>');
+                }
+            }
+
+            // Sync with Local storage
+            const localPayload = {
+                id: payload.id,
+                name: payload.voterName,
+                org: payload.voterOrg,
+                agency: selectedAgency,
+                agencyText: payload.votedAgency,
+                timestamp: payload.timestamp
+            };
+
+            votes.unshift(localPayload);
+            localStorage.setItem('sampaonawathong_votes', JSON.stringify(votes));
+
+            // Reset submit states
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            submitText.textContent = "ส่งคะแนนโหวตยอดนิยม";
+            submitIcon.className = "fa-solid fa-paper-plane";
+
+            // Switch to successful state
+            document.getElementById('formSection').classList.add('hidden');
+            document.getElementById('successSection').classList.remove('hidden');
+
+            // Reset inputs
+            document.getElementById('fullName').value = '';
+            document.getElementById('voterOrg').value = '';
+            document.getElementById('selectedAgencyValue').value = '';
+            document.querySelectorAll('.agency-card').forEach(card => {
+                card.classList.remove('border-gold-500', 'bg-gold-500/5');
+                card.classList.add('border-gold-500/10', 'bg-navy-800/50');
+                card.querySelector('.radio-check').classList.add('hidden');
+                
+                const titleText = card.querySelector('h4');
+                const iconBox = card.querySelector('.bg-gold-500');
+                if (titleText) titleText.classList.remove('text-gold-500');
+                if (iconBox) {
+                    iconBox.classList.add('bg-navy-800', 'text-gold-500');
+                    iconBox.classList.remove('bg-gold-500', 'text-navy-900');
+                }
+            });
+        }
+
+        // Loop to new form
+        function resetToNewVote() {
+            toggleView('form');
+        }
+
+        // Render graphical stats and listings
+        function updateDashboard() {
+            document.getElementById('totalVotes').textContent = votes.length;
+
+            const counts = { agency1: 0, agency2: 0, agency3: 0 };
+            votes.forEach(vote => {
+                if (counts[vote.agency] !== undefined) {
+                    counts[vote.agency]++;
+                }
+            });
+
+            // Render Recent Voters Activity List
+            const listContainer = document.getElementById('voterList');
+            listContainer.innerHTML = '';
+
+            if (votes.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="text-center py-6 text-slate-500 text-xs">
+                        <i class="fa-solid fa-folder-open text-3xl mb-1.5 opacity-50 text-gold-500/40"></i>
+                        <p>ไม่มีรายนามประวัติผู้เสนอสิทธิ์</p>
+                    </div>
+                `;
+                document.getElementById('chartFallback').classList.remove('hidden');
+                if (myChart) myChart.destroy();
+                return;
+            } else {
+                document.getElementById('chartFallback').classList.add('hidden');
+            }
+
+            // Generate rows
+            votes.slice(0, 15).forEach(vote => {
+                const item = document.createElement('div');
+                item.className = "bg-navy-950/60 border border-gold-500/10 p-3.5 rounded-xl flex justify-between items-center text-xs";
+                
+                let agencyBadgeColor = "bg-indigo-950/50 text-indigo-300 border border-indigo-500/20";
+                if (vote.agency === 'agency2') agencyBadgeColor = "bg-amber-950/50 text-amber-300 border border-amber-500/20";
+                if (vote.agency === 'agency3') agencyBadgeColor = "bg-purple-950/50 text-purple-300 border border-purple-500/20";
+
+                item.innerHTML = `
+                    <div class="space-y-1 pr-2 max-w-[210px] truncate">
+                        <p class="font-bold text-white">${vote.name}</p>
+                        <p class="text-[10px] text-slate-400 font-medium">${vote.org}</p>
+                        <p class="text-[9px] text-slate-500">${vote.timestamp}</p>
+                    </div>
+                    <span class="text-[9px] px-2.5 py-1.5 rounded-lg font-bold text-center truncate max-w-[150px] ${agencyBadgeColor}">
+                        ${vote.agency === 'agency1' ? 'กรมเจรจาการค้าฯ' : vote.agency === 'agency2' ? 'กระทรวงการคลัง' : 'กองทัพไทย'}
+                    </span>
+                `;
+                listContainer.appendChild(item);
+            });
+
+            // Set up chart.js visualization
+            const ctx = document.getElementById('voteChart').getContext('2d');
+            if (myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        'กรมเจรจาการค้าฯ',
+                        'กระทรวงการคลัง',
+                        'กองทัพไทย'
+                    ],
+                    datasets: [{
+                        data: [counts.agency1, counts.agency2, counts.agency3],
+                        backgroundColor: [
+                            '#F3C65F', // Bright Gold
+                            '#C5A028', // Dark Gold
+                            '#6366F1'  // Contrast Navy-Blue Accent
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#0A1424' // Matching background
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 10,
+                                color: '#cbd5e1',
+                                font: {
+                                    family: 'Sarabun',
+                                    size: 10
+                                }
+                            }
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // Export data with Thai Excel compatible BOM
+        function exportToCSV() {
+            if (votes.length === 0) {
+                showToast('ไม่มีข้อมูลเพียงพอสำหรับส่งออก', '<i class="fa-solid fa-triangle-exclamation text-red-500"></i>');
+                return;
+            }
+
+            let csvContent = "\uFEFF"; // Force UTF-8 encoding support inside Microsoft Excel
+            csvContent += "ลำดับ,ชื่อ-นามสกุล,หน่วยงานผู้โหวต,รหัสผู้รับเลือก,หน่วยงานที่รับเลือกโหวต,วันที่เวลาลงทะเบียน\r\n";
+
+            votes.forEach((vote, index) => {
+                const row = [
+                    index + 1,
+                    `"${vote.name.replace(/"/g, '""')}"`,
+                    `"${vote.org.replace(/"/g, '""')}"`,
+                    `"${vote.agency}"`,
+                    `"${vote.agencyText.replace(/"/g, '""')}"`,
+                    `"${vote.timestamp}"`
+                ];
+                csvContent += row.join(",") + "\r\n";
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.setAttribute("href", url);
+            
+            const now = new Date();
+            const dateStr = now.getFullYear() + "_" + (now.getMonth() + 1) + "_" + now.getDate();
+            link.setAttribute("download", `รายงานผู้เสนอชื่อ_PopularVote_สำเภานาวาทอง_${dateStr}.csv`);
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showToast('ส่งออกรายงานสำเภานาวาทอง สำเร็จแล้ว', '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
+        }
+
+        // Secure wipe data
+        function confirmReset() {
+            showCustomConfirm(
+                'ยืนยันการล้างข้อมูล?', 
+                'แจนยืนยันที่จะลบข้อมูลสรุปบนบราวเซอร์เครื่องนี้หรือไม่? (ข้อมูลในคลาวด์ Google Sheets จะยังคงอยู่ตามปกติ)', 
+                function() {
+                    votes = [];
+                    localStorage.setItem('sampaonawathong_votes', JSON.stringify(votes));
+                    updateDashboard();
+                    showToast('ล้างข้อมูลภายในเสร็จสิ้น', '<i class="fa-solid fa-trash text-red-400"></i>');
+                }
+            );
+        }
+    </script>
+</body>
+</html>
