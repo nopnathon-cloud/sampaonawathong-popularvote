@@ -1,3 +1,51 @@
+function doPost(e) {
+  try {
+    var doc = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = doc.getActiveSheet();
+    
+    // 1. แปลงข้อมูล JSON ที่ส่งมาจากหน้าเว็บโหวต
+    var rawData = e.postData.contents;
+    var data = JSON.parse(rawData);
+    
+    var ipAddress = data.ipAddress || "";
+    
+    // 2. 🛡️ ตรวจสอบ IP ซ้ำในคอลัมน์ F (คอลัมน์ที่ 6)
+    if (ipAddress !== "" && ipAddress !== "Unknown") {
+      var dataRange = sheet.getDataRange();
+      var values = dataRange.getValues();
+      for (var i = 1; i < values.length; i++) { // ข้ามหัวตารางแถวแรก (i=0)
+        if (values[i][5] === ipAddress) { // คอลัมน์ F คือดัชนีที่ 5
+          return ContentService.createTextOutput(JSON.stringify({ 
+            "status": "duplicate", 
+            "message": "เครื่องหรือเครือข่ายอินเทอร์เน็ตนี้เคยใช้สิทธิ์เสนอชื่อไปแล้ว" 
+          })).setMimeType(ContentService.MimeType.JSON);
+        }
+      }
+    }
+    
+    // 3. บันทึกข้อมูลลงในแถวใหม่ตาม 6 คอลัมน์หลัก [ID, ชื่อผู้โหวต, หน่วยงานผู้โหวต, หน่วยงานที่โหวตให้, วันเวลา, IP Address]
+    sheet.appendRow([
+      data.id || "",
+      data.voterName || "",
+      data.voterOrg || "",
+      data.votedAgency || "",
+      data.timestamp || "",
+      ipAddress
+    ]);
+    
+    // 4. ส่งสถานะตอบกลับว่าสำเร็จ
+    return ContentService.createTextOutput(JSON.stringify({ "status": "success" }))
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ "status": "error", "error": err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
+```
+eof
+
+```html:ระบบโหวตสำเภานาวาทอง:index.html
 <!DOCTYPE html>
 <html lang="th" class="h-full bg-slate-900">
 <head>
@@ -61,7 +109,6 @@
         .gold-border {
             border-image: linear-gradient(to right, #F3C65F, #A3801A) 1;
         }
-        /* Custom dynamic scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -95,10 +142,10 @@
 </head>
 <body class="h-full text-slate-100 antialiased flex flex-col justify-between font-sans selection:bg-gold-500 selection:text-navy-900">
 
-    <!-- Main App Container (Centered Premium Viewport on Desktop) -->
+    <!-- Main App Container -->
     <main class="w-full max-w-lg mx-auto bg-navy-900 min-h-screen shadow-2xl flex flex-col justify-between relative overflow-hidden border-x border-gold-500/20">
         
-        <!-- Header Brand App Bar -->
+        <!-- Header -->
         <header class="bg-gradient-to-b from-navy-800 to-navy-900 border-b border-gold-500/20 px-6 py-6 sticky top-0 z-30 shadow-lg">
             <div class="flex justify-between items-center">
                 <div class="flex items-center space-x-3">
@@ -111,9 +158,7 @@
                     </div>
                 </div>
                 
-                <!-- STICKY ACTION BUTTONS: SECURED AND HIDDEN BY DEFAULT -->
                 <div class="flex items-center space-x-2">
-                    <!-- Added 'hidden' class by default to keep voting screen private -->
                     <button onclick="toggleView('dashboard')" id="dashboardBtn" class="hidden bg-gold-500 hover:bg-gold-600 text-navy-900 active:scale-95 transition-all text-xs font-extrabold px-3.5 py-2.5 rounded-xl flex items-center space-x-1.5 shadow-md shadow-gold-500/20">
                         <i class="fa-solid fa-chart-line"></i>
                         <span>ดูผลโหวต</span>
@@ -126,12 +171,12 @@
             </div>
         </header>
 
-        <!-- Main Content Area -->
+        <!-- Content Area -->
         <div class="flex-grow px-6 py-6 overflow-y-auto">
             
-            <!-- SECTION 1: PREMIUM VOTING FORM -->
+            <!-- SECTION 1: VOTING FORM -->
             <section id="formSection" class="fade-in space-y-6">
-                <!-- Welcome Invitation Banner -->
+                <!-- Banner -->
                 <div class="bg-navy-800/80 border border-gold-500/30 p-5 rounded-2xl relative overflow-hidden shadow-inner">
                     <div class="absolute -right-8 -bottom-8 text-gold-500/5 text-8xl pointer-events-none">
                         <i class="fa-solid fa-ship"></i>
@@ -154,20 +199,20 @@
                         </p>
                     </div>
 
-                    <!-- Online Status Indicator -->
+                    <!-- Online badge -->
                     <div id="connectionStatus" class="mt-3 text-[11px] text-emerald-400 hidden flex items-center space-x-1.5 bg-emerald-950/40 px-3 py-1.5 rounded-lg border border-emerald-500/20">
                         <span class="relative flex h-2 w-2">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                             <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
-                        <span>ระบบออนไลน์: เชื่อมโยงฐานข้อมูล Google Sheets เรียบร้อยแล้ว</span>
+                        <span>ระบบเชื่อมต่อฐานข้อมูล Google Sheets เรียบร้อยแล้ว</span>
                     </div>
                 </div>
 
-                <!-- Form Element -->
+                <!-- Form -->
                 <form id="voteForm" onsubmit="handleVoteSubmit(event)" class="space-y-6">
                     
-                    <!-- Input 1: Firstname & Lastname -->
+                    <!-- Name input -->
                     <div class="space-y-2">
                         <label for="fullName" class="block text-sm font-semibold text-gold-500 flex items-center space-x-2">
                             <i class="fa-solid fa-signature"></i>
@@ -183,7 +228,7 @@
                         </div>
                     </div>
 
-                    <!-- Input 2: Voter's Own Organization -->
+                    <!-- Organization input -->
                     <div class="space-y-2">
                         <label for="voterOrg" class="block text-sm font-semibold text-gold-500 flex items-center space-x-2">
                             <i class="fa-solid fa-briefcase"></i>
@@ -199,7 +244,7 @@
                         </div>
                     </div>
 
-                    <!-- Input 3: Agency Popular Vote Selection (Button Grid) -->
+                    <!-- Options Grid -->
                     <div class="space-y-3">
                         <label class="block text-sm font-semibold text-gold-500 flex items-center space-x-2">
                             <i class="fa-solid fa-award"></i>
@@ -208,7 +253,7 @@
                         
                         <div class="grid grid-cols-1 gap-4">
                             
-                            <!-- Option 3.1: กรมเจรจาการค้าระหว่างประเทศ -->
+                            <!-- 1 -->
                             <div onclick="selectAgency('agency1', this)" class="agency-card border border-gold-500/10 bg-navy-800/50 p-4.5 rounded-2xl cursor-pointer hover:border-gold-500/40 transition-all flex items-start space-x-4 relative overflow-hidden group">
                                 <div class="bg-navy-800 text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-900 p-3 rounded-xl transition-all shadow-md">
                                     <i class="fa-solid fa-earth-asia text-xl"></i>
@@ -224,7 +269,7 @@
                                 </div>
                             </div>
 
-                            <!-- Option 3.2: กระทรวงการคลัง -->
+                            <!-- 2 -->
                             <div onclick="selectAgency('agency2', this)" class="agency-card border border-gold-500/10 bg-navy-800/50 p-4.5 rounded-2xl cursor-pointer hover:border-gold-500/40 transition-all flex items-start space-x-4 relative overflow-hidden group">
                                 <div class="bg-navy-800 text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-900 p-3 rounded-xl transition-all shadow-md">
                                     <i class="fa-solid fa-wallet text-xl"></i>
@@ -240,7 +285,7 @@
                                 </div>
                             </div>
 
-                            <!-- Option 3.3: กองทัพไทย กระทรวงกลาโหม -->
+                            <!-- 3 -->
                             <div onclick="selectAgency('agency3', this)" class="agency-card border border-gold-500/10 bg-navy-800/50 p-4.5 rounded-2xl cursor-pointer hover:border-gold-500/40 transition-all flex items-start space-x-4 relative overflow-hidden group">
                                 <div class="bg-navy-800 text-gold-500 group-hover:bg-gold-500 group-hover:text-navy-900 p-3 rounded-xl transition-all shadow-md">
                                     <i class="fa-solid fa-shield-halved text-xl"></i>
@@ -257,11 +302,10 @@
                             </div>
 
                         </div>
-                        <!-- Helper selected agency input value store -->
                         <input type="hidden" id="selectedAgencyValue" name="agency" required>
                     </div>
 
-                    <!-- Submit Button -->
+                    <!-- Submit -->
                     <button type="submit" id="submitBtn" class="w-full shine-effect bg-gradient-to-r from-gold-600 via-gold-500 to-gold-700 hover:from-gold-500 hover:to-gold-600 active:scale-[0.98] transition-all text-navy-900 font-extrabold py-4 px-4 rounded-xl shadow-lg shadow-gold-500/10 flex items-center justify-center space-x-2 text-base">
                         <i class="fa-solid fa-paper-plane" id="submitIcon"></i>
                         <span id="submitText">ส่งคะแนนโหวตยอดนิยม</span>
@@ -277,14 +321,13 @@
                         <span>สรุปรายงานคะแนน Popular Vote (เฉพาะแอดมิน)</span>
                     </h2>
                     
-                    <!-- Local reset option -->
                     <button onclick="confirmReset()" class="text-xs text-red-400 hover:text-red-500 flex items-center space-x-1.5">
                         <i class="fa-solid fa-trash-can"></i>
                         <span>ล้างข้อมูลเครื่องนี้</span>
                     </button>
                 </div>
 
-                <!-- Google Sheets Cloud Setup (Jan's Integration Panel) -->
+                <!-- Integration Panel -->
                 <div class="bg-navy-800 border border-gold-500/20 p-4.5 rounded-2xl space-y-3 shadow-inner">
                     <button onclick="toggleSettings()" class="w-full flex justify-between items-center text-xs font-bold text-slate-300">
                         <span class="flex items-center space-x-2">
@@ -295,7 +338,7 @@
                     </button>
                     <div id="settingsPanel" class="hidden space-y-3.5 pt-3 border-t border-gold-500/10">
                         <p class="text-[11px] text-slate-400 leading-relaxed">
-                            นำ Web App URL (ที่ลงท้ายด้วย `/exec`) ที่ได้จากคู่มือในหน้าระบบมาวางด้านล่างเพื่อเชื่อมโยงข้อมูลเข้าชีตส่วนตัวแบบเรียลไทม์
+                            Web App URL จาก Google Sheets ของแจนถูกฝังไว้แบบค่าเริ่มต้นในระบบเรียบร้อยแล้วค่ะ แจนสามารถอัปเดตลิงก์ใหม่ได้จากตรงนี้หากมีการเปลี่ยนสเปรดชีตในอนาคตค่ะ
                         </p>
                         <div class="space-y-1.5">
                             <label class="text-[10px] font-bold text-gold-500 uppercase tracking-widest">Google Apps Script URL</label>
@@ -322,16 +365,15 @@
                             <i class="fa-solid fa-file-excel text-sm"></i>
                             <span>ส่งออกไฟล์ Excel</span>
                         </button>
-                        <p class="text-[10px] text-slate-400 mt-2">ดาวน์โหลดเพื่อดูชื่อผู้โหวต</p>
+                        <p class="text-[10px] text-slate-400 mt-2">ดาวน์โหลดดูข้อมูลทั้งหมด</p>
                     </div>
                 </div>
 
-                <!-- Chart Container -->
+                <!-- Chart -->
                 <div class="bg-navy-800 border border-gold-500/10 p-5 rounded-2xl flex flex-col items-center">
                     <h3 class="text-xs font-bold text-slate-300 mb-4 self-start">สัดส่วนคะแนนโหวตสะสม (%)</h3>
                     <div class="relative w-full max-w-[240px] h-[240px] flex items-center justify-center">
                         <canvas id="voteChart"></canvas>
-                        <!-- Chart Fallback when empty -->
                         <div id="chartFallback" class="absolute inset-0 flex flex-col items-center justify-center bg-navy-800 text-slate-400 text-xs hidden">
                             <i class="fa-solid fa-box-open text-4xl mb-2 text-slate-600"></i>
                             <span>ยังไม่มีคะแนนถูกลงโหวต</span>
@@ -339,11 +381,11 @@
                     </div>
                 </div>
 
-                <!-- List of Voters (Recent Activity) -->
+                <!-- List of Voters -->
                 <div class="space-y-3">
                     <h3 class="text-xs font-bold text-gold-500 uppercase tracking-widest">ข้อมูลผู้เสนอชื่อล่าสุด</h3>
                     <div id="voterList" class="space-y-2.5 max-h-56 overflow-y-auto pr-1">
-                        <!-- Dynamic generated lists -->
+                        <!-- Dynamic content -->
                     </div>
                 </div>
             </section>
@@ -359,7 +401,7 @@
                         ขอบพระคุณสมาชิกหอการค้าไทยทุกท่านที่ร่วมเสนอชื่อผู้เข้ารับรางวัล Popular Vote สำเภานาวาทอง 2569
                     </p>
                 </div>
-                <div class="pt-4">
+                <div class="pt-4" id="retryVoteContainer">
                     <button onclick="resetToNewVote()" class="inline-flex items-center space-x-2 bg-navy-800 border border-gold-500/30 hover:bg-navy-950 text-gold-500 font-bold px-6 py-3.5 rounded-xl shadow-lg transition-all active:scale-95 text-sm">
                         <i class="fa-solid fa-arrow-rotate-left"></i>
                         <span>ทำการโหวตใหม่อีกครั้ง</span>
@@ -368,7 +410,7 @@
             </section>
         </div>
 
-        <!-- Custom Premium Password & Auth Dialog Overlay -->
+        <!-- Admin Overlay -->
         <div id="adminModal" class="fixed inset-0 bg-navy-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
             <div class="bg-navy-900 border border-gold-500/30 p-6 rounded-2xl w-80 shadow-2xl space-y-4 transform scale-95 transition-transform duration-300">
                 <div class="text-center">
@@ -386,7 +428,7 @@
             </div>
         </div>
 
-        <!-- Custom Confirmation and Dialog Modal (Replaces native alert/confirm) -->
+        <!-- Custom Dialog Modal -->
         <div id="customDialog" class="fixed inset-0 bg-navy-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-all duration-200">
             <div class="bg-navy-900 border border-gold-500/30 p-6 rounded-2xl w-80 shadow-2xl text-center space-y-4 transform scale-95 transition-all duration-200">
                 <div id="dialogIcon" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto"></div>
@@ -402,7 +444,7 @@
             <span id="toastMessage">แจ้งเตือนข้อมูล</span>
         </div>
 
-        <!-- Footer credit/branding with Secret Lock Trigger icon -->
+        <!-- Footer -->
         <footer class="bg-navy-950 border-t border-gold-500/10 px-6 py-4.5 text-center text-[10px] text-slate-400 flex justify-center items-center space-x-1">
             <span>© พิธีมอบรางวัลสำเภานาวาทอง ประจำปี 2569 • หอการค้าไทย</span>
             <button onclick="openAdminModal()" class="text-gold-500/40 hover:text-gold-500 transition-colors ml-1 focus:outline-none focus:ring-0" title="Admin">
@@ -412,38 +454,57 @@
     </main>
 
     <script>
-        // State variables
-        let mockVotes = [
-            { id: 1, name: "นายทักษิณ มั่งมี", org: "บจก. สยามเทรดดิ้ง", agency: "agency1", agencyText: "กรมเจรจาการค้าระหว่างประเทศ กระทรวงพาณิชย์", timestamp: "2026-07-14 14:15" },
-            { id: 2, name: "นางกอบกาญจน์ สุขใจ", org: "หจก. ภาคใต้พาณิชย์", agency: "agency2", agencyText: "กระทรวงการคลัง", timestamp: "2026-07-14 14:18" },
-            { id: 3, name: "นายประวิทย์ มั่นคง", org: "บมจ. ไทยซิเคียวริตี้", agency: "agency3", agencyText: "กองทัพไทย กระทรวงกลาโหม", timestamp: "2026-07-14 14:20" }
-        ];
+        // Default Google Sheet App URL ของแจน
+        const DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycbzX1tJ6NsbnKEXk2PEgz3oD1au_IdEsRxVqFdmqVniZMxqI6XModckU0I0FtoeSyaI/exec";
 
         let votes = [];
         let myChart = null;
         let googleSheetUrl = "";
         let pendingConfirmCallback = null;
+        let userIpAddress = "Unknown";
+        let hasVotedLocally = false;
 
-        // Initialization
-        window.onload = function() {
-            // Fetch localStorage values
+        // Fetch IP Address
+        async function fetchUserIp() {
+            try {
+                const res = await fetch("https://api.ipify.org?format=json");
+                const data = await res.json();
+                userIpAddress = data.ip || "Unknown";
+            } catch (err) {
+                console.error("Failed to fetch IP address: ", err);
+            }
+        }
+
+        window.onload = async function() {
+            // ดึง IP ของผู้โหวตทันทีที่เปิดหน้าจอ
+            await fetchUserIp();
+
+            // ตรวจสอบสถานะการโหวตเก่า
+            hasVotedLocally = localStorage.getItem('sampaonawathong_has_voted') === 'true' || 
+                               localStorage.getItem('sampaonawathong_user_ip') === userIpAddress;
+
+            if (hasVotedLocally && userIpAddress !== "Unknown") {
+                // ซ่อนฟอร์มและย้ายไปแสดงผลลัพธ์ว่าสำเร็จ เพื่อป้องกันสิทธิ์
+                document.getElementById('formSection').classList.add('hidden');
+                document.getElementById('successSection').classList.remove('hidden');
+                document.getElementById('retryVoteContainer').classList.add('hidden'); // ซ่อนปุ่มโหวตซ้ำเพื่อความปลอดภัย
+            }
+
+            // ตั้งค่า Local Storage
             const storedVotes = localStorage.getItem('sampaonawathong_votes');
             if (storedVotes) {
                 votes = JSON.parse(storedVotes);
             } else {
-                // Populate with pre-filled premium mock records
-                votes = [...mockVotes];
-                localStorage.setItem('sampaonawathong_votes', JSON.stringify(votes));
+                localStorage.setItem('sampaonawathong_votes', JSON.stringify([]));
             }
 
-            // Sheets sync link setup
-            googleSheetUrl = localStorage.getItem('sampaonawathong_sheet_url') || "";
+            // เรียกดึงค่า URL
+            googleSheetUrl = localStorage.getItem('sampaonawathong_sheet_url') || DEFAULT_SHEET_URL;
             document.getElementById('sheetUrlInput').value = googleSheetUrl;
+            
             updateConnectionBadge();
-
             updateDashboard();
 
-            // Handle press enter inside Admin password input field
             document.getElementById('adminPassword').addEventListener('keyup', function(e) {
                 if (e.key === 'Enter') {
                     verifyAdminPassword();
@@ -451,7 +512,7 @@
             });
         }
 
-        // Custom Dialog Modal Controllers (Avoiding native popups)
+        // Dialog Modal Controls
         function showCustomAlert(title, message, iconType = 'info') {
             const dialog = document.getElementById('customDialog');
             const dTitle = document.getElementById('dialogTitle');
@@ -462,7 +523,6 @@
             dTitle.textContent = title;
             dMessage.textContent = message;
 
-            // Apply Icon styles
             if (iconType === 'error') {
                 dIcon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto bg-red-950/40 text-red-400 border border-red-500/20";
                 dIcon.innerHTML = '<i class="fa-solid fa-circle-xmark text-xl"></i>';
@@ -474,14 +534,12 @@
                 dIcon.innerHTML = '<i class="fa-solid fa-info text-xl"></i>';
             }
 
-            // Generate Action buttons
             dButtons.innerHTML = `
                 <button onclick="closeCustomDialog()" class="w-full py-2.5 bg-gold-500 hover:bg-gold-600 text-navy-900 rounded-xl text-xs font-extrabold transition-all">
                     ตกลง
                 </button>
             `;
 
-            // Open Animation
             dialog.classList.remove('hidden');
             setTimeout(() => {
                 dialog.classList.remove('opacity-0');
@@ -489,7 +547,7 @@
             }, 10);
         }
 
-        function showCustomConfirm(title, message, onConfirm, iconType = 'warning') {
+        function showCustomConfirm(title, message, onConfirm) {
             const dialog = document.getElementById('customDialog');
             const dTitle = document.getElementById('dialogTitle');
             const dMessage = document.getElementById('dialogMessage');
@@ -503,13 +561,11 @@
             dIcon.className = "w-12 h-12 rounded-full flex items-center justify-center mx-auto bg-amber-950/40 text-amber-500 border border-amber-500/20";
             dIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-xl"></i>';
 
-            // Generate Confirm buttons
             dButtons.innerHTML = `
                 <button onclick="closeCustomDialog()" class="flex-1 py-2.5 bg-navy-800 hover:bg-navy-750 text-slate-300 rounded-xl text-xs font-bold transition-all">ยกเลิก</button>
                 <button onclick="triggerConfirmAction()" class="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold transition-all">ยืนยัน</button>
             `;
 
-            // Open Animation
             dialog.classList.remove('hidden');
             setTimeout(() => {
                 dialog.classList.remove('opacity-0');
@@ -534,7 +590,7 @@
             }, 200);
         }
 
-        // Admin Auth Modal Controllers
+        // Admin Auth
         function openAdminModal() {
             const modal = document.getElementById('adminModal');
             document.getElementById('adminPassword').value = '';
@@ -559,11 +615,8 @@
             const pw = document.getElementById('adminPassword').value;
             if (pw === 'jan2569') {
                 closeAdminModal();
-                // Reveal the Results Dashboard navigation button
                 document.getElementById('dashboardBtn').classList.remove('hidden');
-                showToast('เข้าสู่ระบบแอดมินสำเร็จ! ปุ่ม "ดูผลโหวต" ได้รับการปลดล็อกแล้ว', '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
-                
-                // Automatically switch view to dashboard for Jan
+                showToast('เข้าสู่ระบบสำเร็จ! ปุ่ม "ดูผลโหวต" ได้รับการปลดล็อกแล้ว', '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
                 toggleView('dashboard');
             } else {
                 showCustomAlert('การยืนยันตัวตนล้มเหลว', 'รหัสผ่านสำหรับผู้ดูแลระบบไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง', 'error');
@@ -583,14 +636,14 @@
             const urlInput = document.getElementById('sheetUrlInput').value.trim();
             if (urlInput === "") {
                 localStorage.removeItem('sampaonawathong_sheet_url');
-                googleSheetUrl = "";
-                showToast('ยกเลิกเชื่อมโยงข้อมูล เรียบร้อยแล้ว', '<i class="fa-solid fa-circle-info text-amber-500"></i>');
+                googleSheetUrl = DEFAULT_SHEET_URL;
+                showToast('คืนค่าเชื่อมโยงสตรีมเป็น URL สำรองเรียบร้อยแล้ว', '<i class="fa-solid fa-circle-info text-amber-500"></i>');
             } else if (urlInput.startsWith('https://script.google.com/')) {
                 localStorage.setItem('sampaonawathong_sheet_url', urlInput);
                 googleSheetUrl = urlInput;
                 showToast('บันทึกที่ตั้งและเชื่อมโยงเครือข่ายสำเร็จ', '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
             } else {
-                showToast('รูปแบบ URL ไม่ถูกต้อง กรุณากรอก Web App URL ของท่าน', '<i class="fa-solid fa-triangle-exclamation text-red-500"></i>');
+                showToast('รูปแบบ URL ไม่ถูกต้อง กรุณากรอก Web App URL', '<i class="fa-solid fa-triangle-exclamation text-red-500"></i>');
             }
             updateConnectionBadge();
         }
@@ -604,15 +657,13 @@
             }
         }
 
-        // Interactive Choice Styling Selection
+        // Select Option UI
         function selectAgency(agencyId, element) {
-            // Reset state
             document.querySelectorAll('.agency-card').forEach(card => {
                 card.classList.remove('border-gold-500', 'bg-gold-500/5');
                 card.classList.add('border-gold-500/10', 'bg-navy-800/50');
                 card.querySelector('.radio-check').classList.add('hidden');
                 
-                // Reset internal text and icon indicators
                 const titleText = card.querySelector('h4');
                 const iconBox = card.querySelector('.group-hover\\:bg-gold-500');
                 if (titleText) titleText.classList.remove('text-gold-500');
@@ -622,7 +673,6 @@
                 }
             });
 
-            // Set chosen styles
             element.classList.remove('border-gold-500/10', 'bg-navy-800/50');
             element.classList.add('border-gold-500', 'bg-gold-500/5');
             element.querySelector('.radio-check').classList.remove('hidden');
@@ -635,11 +685,10 @@
                 activeIconBox.classList.add('bg-gold-500', 'text-navy-900');
             }
 
-            // Update form payload
             document.getElementById('selectedAgencyValue').value = agencyId;
         }
 
-        // Show customizable Toast
+        // Show Toast
         function showToast(message, iconHTML) {
             const toast = document.getElementById('toast');
             const msgEl = document.getElementById('toastMessage');
@@ -661,7 +710,7 @@
             }, 3000);
         }
 
-        // Switch layout state view
+        // Switch layouts
         function toggleView(view) {
             const formSection = document.getElementById('formSection');
             const dashboardSection = document.getElementById('dashboardSection');
@@ -681,8 +730,7 @@
                 successSection.classList.add('hidden');
                 formSection.classList.remove('hidden');
                 voteFormBtn.classList.add('hidden');
-                // Only show dashboard button if it's unlocked (not containing hidden class in code)
-                if (dashboardBtn.classList.contains('hidden') === false || document.getElementById('dashboardBtn').style.display !== 'none') {
+                if (dashboardBtn.classList.contains('hidden') === false) {
                     dashboardBtn.classList.remove('hidden');
                 }
             }
@@ -692,20 +740,18 @@
         async function handleVoteSubmit(event) {
             event.preventDefault();
 
+            // 1. ตรวจสอบการโหวตซ้ำใน Local Browser ก่อนยิง API
+            if (hasVotedLocally) {
+                showCustomAlert('จำกัดการใช้สิทธิ์', 'คุณเคยเสนอชื่อรับรางวัลไปแล้ว ระบบอนุญาตให้ส่งสิทธิ์ได้เพียง 1 ครั้งต่อ 1 ท่านค่ะ', 'error');
+                return;
+            }
+
             const fullName = document.getElementById('fullName').value.trim();
             const voterOrg = document.getElementById('voterOrg').value.trim();
             const selectedAgency = document.getElementById('selectedAgencyValue').value;
 
-            if (!fullName) {
-                showToast('กรุณากรอก ชื่อ-นามสกุล', '<i class="fa-solid fa-exclamation-circle text-red-500"></i>');
-                return;
-            }
-            if (!voterOrg) {
-                showToast('กรุณากรอกหน่วยงานผู้โหวต', '<i class="fa-solid fa-exclamation-circle text-red-500"></i>');
-                return;
-            }
-            if (!selectedAgency) {
-                showToast('กรุณาคลิกเลือกหน่วยงานรับรางวัล', '<i class="fa-solid fa-exclamation-circle text-red-500"></i>');
+            if (!fullName || !voterOrg || !selectedAgency) {
+                showToast('กรุณากรอกข้อมูลและเลือกหน่วยงานให้ครบถ้วน', '<i class="fa-solid fa-exclamation-circle text-red-500"></i>');
                 return;
             }
 
@@ -722,12 +768,16 @@
                                   String(now.getHours()).padStart(2, '0') + ':' + 
                                   String(now.getMinutes()).padStart(2, '0');
 
+            // 2. ดึง IP ล่าสุดเผื่อมีกรณีหลุดก่อนหน้านี้
+            await fetchUserIp();
+
             const payload = {
                 id: Date.now(),
                 voterName: fullName,
                 voterOrg: voterOrg,
                 votedAgency: agencyMap[selectedAgency],
-                timestamp: formattedDate
+                timestamp: formattedDate,
+                ipAddress: userIpAddress
             };
 
             // Setup loading state
@@ -740,48 +790,76 @@
             submitText.textContent = "กำลังลงทะเบียนส่งผลโหวต...";
             submitIcon.className = "fa-solid fa-circle-notch animate-spin";
 
-            // Submit Online to Google Sheets (Jan's Script Integration)
+            let apiSuccess = false;
+
+            // Submit to Google Sheets (เช็คสถานะซ้ำจากปลายทางจริง)
             if (googleSheetUrl) {
                 try {
-                    await fetch(googleSheetUrl, {
+                    const response = await fetch(googleSheetUrl, {
                         method: 'POST',
-                        mode: 'no-cors', // Avoid complex local preflight CORS issues
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
                         body: JSON.stringify(payload)
                     });
-                    showToast('บันทึกลง Google Sheets และระบบคลาวด์แล้ว!', '<i class="fa-solid fa-cloud text-emerald-400"></i>');
+                    
+                    const result = await response.json();
+
+                    if (result.status === 'duplicate') {
+                        // ❌ ถ้าระบบคลาวด์บอกว่า IP ซ้ำ ให้ระงับการโหวต
+                        showCustomAlert('จำกัดการใช้สิทธิ์โหวต', 'เครือข่ายอินเทอร์เน็ตหรืออุปกรณ์นี้เคยใช้เสนอสิทธิ์รับรางวัลไปแล้ว ขออภัยในความไม่สะดวกค่ะ', 'error');
+                        
+                        // บล็อกสถานะโลคอลเพื่อกันคนยิงซ้ำ
+                        localStorage.setItem('sampaonawathong_has_voted', 'true');
+                        localStorage.setItem('sampaonawathong_user_ip', userIpAddress);
+                        hasVotedLocally = true;
+
+                        // รีเซ็ตการส่ง
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+                        submitText.textContent = "ส่งคะแนนโหวตยอดนิยม";
+                        submitIcon.className = "fa-solid fa-paper-plane";
+                        return;
+                    }
+
+                    apiSuccess = true;
+                    showToast('บันทึกคะแนนเข้า Google Sheets สำเร็จ!', '<i class="fa-solid fa-cloud text-emerald-400"></i>');
                 } catch (err) {
-                    console.error("Sheet Connection Error: ", err);
-                    showToast('ระบบคลาวด์ขัดข้อง บันทึกผลสำรองลงเครื่องแทน', '<i class="fa-solid fa-triangle-exclamation text-amber-500"></i>');
+                    console.error("Sheet Sync Error: ", err);
+                    // หากขัดข้องชั่วคราว ให้ยอมรับผลบันทึกในเครื่องแทนเพื่อป้องกันความเสียหาย
+                    apiSuccess = true;
                 }
             }
 
-            // Sync with Local storage
-            const localPayload = {
-                id: payload.id,
-                name: payload.voterName,
-                org: payload.voterOrg,
-                agency: selectedAgency,
-                agencyText: payload.votedAgency,
-                timestamp: payload.timestamp
-            };
+            if (apiSuccess) {
+                // บันทึกลง Local
+                const localPayload = {
+                    id: payload.id,
+                    name: payload.voterName,
+                    org: payload.voterOrg,
+                    agency: selectedAgency,
+                    agencyText: payload.votedAgency,
+                    timestamp: payload.timestamp,
+                    ip: userIpAddress
+                };
 
-            votes.unshift(localPayload);
-            localStorage.setItem('sampaonawathong_votes', JSON.stringify(votes));
+                votes.unshift(localPayload);
+                localStorage.setItem('sampaonawathong_votes', JSON.stringify(votes));
+                
+                // 🛡️ ตั้งค่าบล็อกการโหวตซ้ำในเครื่องนี้อย่างถาวร
+                localStorage.setItem('sampaonawathong_has_voted', 'true');
+                localStorage.setItem('sampaonawathong_user_ip', userIpAddress);
+                hasVotedLocally = true;
 
-            // Reset submit states
+                // ย้ายหน้า
+                document.getElementById('formSection').classList.add('hidden');
+                document.getElementById('successSection').classList.remove('hidden');
+                document.getElementById('retryVoteContainer').classList.add('hidden'); // ซ่อนปุ่มโหวตซ้ำสำหรับคนทั่วไป
+            }
+
+            // Reset inputs
             submitBtn.disabled = false;
             submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
             submitText.textContent = "ส่งคะแนนโหวตยอดนิยม";
             submitIcon.className = "fa-solid fa-paper-plane";
 
-            // Switch to successful state
-            document.getElementById('formSection').classList.add('hidden');
-            document.getElementById('successSection').classList.remove('hidden');
-
-            // Reset inputs
             document.getElementById('fullName').value = '';
             document.getElementById('voterOrg').value = '';
             document.getElementById('selectedAgencyValue').value = '';
@@ -805,7 +883,7 @@
             toggleView('form');
         }
 
-        // Render graphical stats and listings
+        // Render Dashboard
         function updateDashboard() {
             document.getElementById('totalVotes').textContent = votes.length;
 
@@ -816,7 +894,6 @@
                 }
             });
 
-            // Render Recent Voters Activity List
             const listContainer = document.getElementById('voterList');
             listContainer.innerHTML = '';
 
@@ -824,7 +901,7 @@
                 listContainer.innerHTML = `
                     <div class="text-center py-6 text-slate-500 text-xs">
                         <i class="fa-solid fa-folder-open text-3xl mb-1.5 opacity-50 text-gold-500/40"></i>
-                        <p>ไม่มีรายนามประวัติผู้เสนอสิทธิ์</p>
+                        <p>ไม่มีรายนามประวัติผู้เสนอสิทธิ์ในระบบนี้</p>
                     </div>
                 `;
                 document.getElementById('chartFallback').classList.remove('hidden');
@@ -834,7 +911,6 @@
                 document.getElementById('chartFallback').classList.add('hidden');
             }
 
-            // Generate rows
             votes.slice(0, 15).forEach(vote => {
                 const item = document.createElement('div');
                 item.className = "bg-navy-950/60 border border-gold-500/10 p-3.5 rounded-xl flex justify-between items-center text-xs";
@@ -847,7 +923,7 @@
                     <div class="space-y-1 pr-2 max-w-[210px] truncate">
                         <p class="font-bold text-white">${vote.name}</p>
                         <p class="text-[10px] text-slate-400 font-medium">${vote.org}</p>
-                        <p class="text-[9px] text-slate-500">${vote.timestamp}</p>
+                        <p class="text-[9px] text-slate-500">IP: ${vote.ip || 'Unknown'} | ${vote.timestamp}</p>
                     </div>
                     <span class="text-[9px] px-2.5 py-1.5 rounded-lg font-bold text-center truncate max-w-[150px] ${agencyBadgeColor}">
                         ${vote.agency === 'agency1' ? 'กรมเจรจาการค้าฯ' : vote.agency === 'agency2' ? 'กระทรวงการคลัง' : 'กองทัพไทย'}
@@ -856,7 +932,7 @@
                 listContainer.appendChild(item);
             });
 
-            // Set up chart.js visualization
+            // Pie Chart
             const ctx = document.getElementById('voteChart').getContext('2d');
             if (myChart) {
                 myChart.destroy();
@@ -873,12 +949,12 @@
                     datasets: [{
                         data: [counts.agency1, counts.agency2, counts.agency3],
                         backgroundColor: [
-                            '#F3C65F', // Bright Gold
-                            '#C5A028', // Dark Gold
-                            '#6366F1'  // Contrast Navy-Blue Accent
+                            '#F3C65F',
+                            '#C5A028',
+                            '#6366F1'
                         ],
                         borderWidth: 2,
-                        borderColor: '#0A1424' // Matching background
+                        borderColor: '#0A1424'
                     }]
                 },
                 options: {
@@ -902,15 +978,15 @@
             });
         }
 
-        // Export data with Thai Excel compatible BOM
+        // Export Excel
         function exportToCSV() {
             if (votes.length === 0) {
                 showToast('ไม่มีข้อมูลเพียงพอสำหรับส่งออก', '<i class="fa-solid fa-triangle-exclamation text-red-500"></i>');
                 return;
             }
 
-            let csvContent = "\uFEFF"; // Force UTF-8 encoding support inside Microsoft Excel
-            csvContent += "ลำดับ,ชื่อ-นามสกุล,หน่วยงานผู้โหวต,รหัสผู้รับเลือก,หน่วยงานที่รับเลือกโหวต,วันที่เวลาลงทะเบียน\r\n";
+            let csvContent = "\uFEFF"; // Force UTF-8 BOM
+            csvContent += "ลำดับ,ชื่อ-นามสกุล,หน่วยงานผู้โหวต,รหัสผู้รับเลือก,หน่วยงานที่รับเลือกโหวต,วันที่เวลาลงทะเบียน,IP Address\r\n";
 
             votes.forEach((vote, index) => {
                 const row = [
@@ -919,7 +995,8 @@
                     `"${vote.org.replace(/"/g, '""')}"`,
                     `"${vote.agency}"`,
                     `"${vote.agencyText.replace(/"/g, '""')}"`,
-                    `"${vote.timestamp}"`
+                    `"${vote.timestamp}"`,
+                    `"${vote.ip || 'Unknown'}"`
                 ];
                 csvContent += row.join(",") + "\r\n";
             });
@@ -940,16 +1017,20 @@
             showToast('ส่งออกรายงานสำเภานาวาทอง สำเร็จแล้ว', '<i class="fa-solid fa-circle-check text-emerald-400"></i>');
         }
 
-        // Secure wipe data
+        // Reset
         function confirmReset() {
             showCustomConfirm(
                 'ยืนยันการล้างข้อมูล?', 
-                'แจนยืนยันที่จะลบข้อมูลสรุปบนบราวเซอร์เครื่องนี้หรือไม่? (ข้อมูลในคลาวด์ Google Sheets จะยังคงอยู่ตามปกติ)', 
+                'แจนยืนยันที่จะลบข้อมูลสรุปบนบราวเซอร์เครื่องนี้หรือไม่? (ข้อมูลในคลาวด์ Google Sheets จะไม่หายและยังใช้งานเพื่อความปลอดภัยได้ตามปกติค่ะ)', 
                 function() {
                     votes = [];
-                    localStorage.setItem('sampaonawathong_votes', JSON.stringify(votes));
+                    localStorage.setItem('sampaonawathong_votes', JSON.stringify([]));
+                    localStorage.removeItem('sampaonawathong_has_voted');
+                    localStorage.removeItem('sampaonawathong_user_ip');
+                    hasVotedLocally = false;
+                    
                     updateDashboard();
-                    showToast('ล้างข้อมูลภายในเสร็จสิ้น', '<i class="fa-solid fa-trash text-red-400"></i>');
+                    showToast('ล้างข้อมูลภายในเสร็จสิ้น มีสิทธิ์กดโหวตซ้ำในการทดสอบได้แล้วค่ะ', '<i class="fa-solid fa-trash text-red-400"></i>');
                 }
             );
         }
