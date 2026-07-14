@@ -150,7 +150,7 @@
                         </p>
                         <p class="text-[11px] text-red-400 font-semibold flex items-center space-x-1.5">
                             <i class="fa-solid fa-clock"></i>
-                            <span>ปิดรับโหวต: วันอาทิตย์ที่ 24 กรกฎาคม 2569 เวลา 16.00 น.</span>
+                            <span>ปิดรับโหวต: วันอาทิตย์ที่ 26 กรกฎาคม 2569 เวลา 16.00 น.</span>
                         </p>
                     </div>
 
@@ -421,7 +421,7 @@
 
         let votes = [];
         let myChart = null;
-        let googleSheetUrl = "https://script.google.com/macros/s/AKfycbzX1tJ6NsbnKEXk2PEgz3oD1au_IdEsRxVqFdmqVniZMxqI6XModckU0I0FtoeSyaI/exec";
+        let googleSheetUrl = "";
         let pendingConfirmCallback = null;
 
         // Initialization
@@ -437,7 +437,7 @@
             }
 
             // Sheets sync link setup
-            googleSheetUrl = localStorage.getItem('sampaonawathong_sheet_url') || "https://script.google.com/macros/s/AKfycbzX1tJ6NsbnKEXk2PEgz3oD1au_IdEsRxVqFdmqVniZMxqI6XModckU0I0FtoeSyaI/exec";
+            googleSheetUrl = localStorage.getItem('sampaonawathong_sheet_url') || "";
             document.getElementById('sheetUrlInput').value = googleSheetUrl;
             updateConnectionBadge();
 
