@@ -421,7 +421,7 @@
 
         let votes = [];
         let myChart = null;
-        let googleSheetUrl = "";
+        let googleSheetUrl = "https://script.google.com/macros/s/AKfycbzX1tJ6NsbnKEXk2PEgz3oD1au_IdEsRxVqFdmqVniZMxqI6XModckU0I0FtoeSyaI/exec";
         let pendingConfirmCallback = null;
 
         // Initialization
@@ -437,7 +437,7 @@
             }
 
             // Sheets sync link setup
-            googleSheetUrl = localStorage.getItem('sampaonawathong_sheet_url') || "";
+            googleSheetUrl = localStorage.getItem('sampaonawathong_sheet_url') || "https://script.google.com/macros/s/AKfycbzX1tJ6NsbnKEXk2PEgz3oD1au_IdEsRxVqFdmqVniZMxqI6XModckU0I0FtoeSyaI/exec";
             document.getElementById('sheetUrlInput').value = googleSheetUrl;
             updateConnectionBadge();
 
